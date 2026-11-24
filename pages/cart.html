@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart | Dine in</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1.65fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .cart-item-info {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .cart-item-title {
+      font-family: var(--font-heading);
+      font-size: 1.08rem;
+      color: var(--color-charcoal);
+      margin-bottom: 0.2rem;
+    }
+
+    .cart-item-price {
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .cart-item-subtotal {
+      font-weight: 700;
+      color: var(--color-terracotta);
+      min-width: 72px;
+      text-align: right;
+    }
+
+    .empty-cart-box {
+      background-color: var(--color-surface);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .promo-form {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .promo-feedback {
+      font-size: 0.84rem;
+      margin-top: 0.45rem;
+      margin-bottom: 0;
+    }
+
+    .promo-feedback.is-success {
+      color: var(--color-success);
+    }
+
+    .promo-feedback.is-error {
+      color: var(--color-danger);
+    }
+
+    @media (max-width: 860px) {
+      .cart-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Shared Header Navbar -->
+  <header class="navbar">
+    <div class="container navbar-container">
+      <a href="../index.html" class="navbar-brand">Dine <span>in</span></a>
+
+      <button class="navbar-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav class="navbar-menu" aria-label="Main navigation">
+        <ul class="navbar-links">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="menu.html" class="nav-link">Menu</a></li>
+          <li><a href="deals.html" class="nav-link">Deals</a></li>
+          <li><a href="cart.html" class="nav-link active">Cart</a></li>
+          <li><a href="checkout.html" class="nav-link">Checkout</a></li>
+          <li><a href="order-tracking.html" class="nav-link">Track Order</a></li>
+          <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+          <li class="nav-dropdown">
+            <button class="nav-link nav-dropdown-toggle" type="button">More &#9662;</button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="specials.html" class="nav-link">Chef Specials</a></li>
+              <li><a href="order-history.html" class="nav-link">Order History</a></li>
+              <li><a href="catering.html" class="nav-link">Catering</a></li>
+              <li><a href="gift-cards.html" class="nav-link">Gift Cards</a></li>
+              <li><a href="reviews.html" class="nav-link">Reviews</a></li>
+              <li><a href="profile.html" class="nav-link">Profile</a></li>
+              <li><a href="login.html" class="nav-link">Login</a></li>
+              <li><a href="about.html" class="nav-link">About Us</a></li>
+              <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="navbar-actions">
+          <a href="cart.html" class="cart-link">
+            Cart <span class="cart-badge" data-cart-badge>0</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="flex-between mb-3">
+          <div>
+            <h1>Your Shopping Cart</h1>
+            <p class="mb-0">Review your selected dishes, adjust quantities, or apply a promo code.</p>
+          </div>
+          <div class="flex">
+            <button type="button" id="load-sample-btn" class="btn btn-outline btn-sm">
+              Load Sample Items
+            </button>
+            <button type="button" id="clear-cart-btn" class="btn btn-ghost btn-sm">
+              Clear Cart
+            </button>
+          </div>
+        </div>
+
+        <div class="cart-layout">
+          <!-- Cart Items List -->
+          <section aria-label="Cart items">
+            <div id="cart-items-container"></div>
+          </section>
+
+          <!-- Order Summary & Promo Code -->
+          <aside class="summary-box" aria-label="Order summary">
+            <h2 class="mb-2">Order Summary</h2>
+
+            <div class="form-group">
+              <label for="promo-input" class="form-label">Promo Code</label>
+              <div class="promo-form">
+                <input
+                  type="text"
+                  id="promo-input"
+                  class="form-control"
+                  placeholder="Try DINE10"
+                  autocomplete="off"
+                >
+                <button type="button" id="apply-promo-btn" class="btn btn-secondary btn-sm">
+                  Apply
+                </button>
+              </div>
+              <p class="form-hint">Use code <strong>DINE10</strong> for 10% off your subtotal.</p>
+              <p id="promo-feedback" class="promo-feedback" aria-live="polite"></p>
+            </div>
+
+            <div class="summary-row">
+              <span>Subtotal (<span id="summary-count">0</span> items)</span>
+              <span id="summary-subtotal">$0.00</span>
+            </div>
+            <div class="summary-row" id="discount-row" hidden>
+              <span>Promo Discount (<span id="applied-promo-label">DINE10</span>)</span>
+              <span id="summary-discount" class="text-accent">-$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Estimated Tax (8%)</span>
+              <span id="summary-tax">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Delivery Fee</span>
+              <span id="summary-delivery">$0.00</span>
+            </div>
+            <div class="summary-row summary-total">
+              <span>Total</span>
+              <span id="summary-total">$0.00</span>
+            </div>
+
+            <div class="mt-3">
+              <a href="checkout.html" id="proceed-checkout-btn" class="btn btn-primary btn-block btn-lg">
+                Proceed to Checkout
+              </a>
+              <a href="menu.html" class="btn btn-outline btn-block mt-1">
+                Continue Browsing Menu
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-title">Dine in</h3>
+          <p>Freshly prepared dishes crafted with warm hospitality and delivered straight to your table.</p>
+        </div>
+        <div>
+          <h4 class="footer-title">Ordering</h4>
+          <ul class="footer-links">
+            <li><a href="menu.html">Full Menu</a></li>
+            <li><a href="deals.html">Combo Deals</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="order-tracking.html">Order Tracking</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Restaurant</h4>
+          <ul class="footer-links">
+            <li><a href="reservations.html">Table Reservations</a></li>
+            <li><a href="catering.html">Catering Services</a></li>
+            <li><a href="about.html">Our Story</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Hours &amp; Location</h4>
+          <p>Mon – Sun: 11:00 AM – 11:00 PM</p>
+          <p>125 Warm Hearth Avenue</p>
+          <p>Phone: (555) 234-5678</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Dine in Restaurant. All rights reserved.</span>
+        <span>Group 03 | Section SE-D</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const PROMO_STORAGE_KEY = 'dinein_promo_v1';
+      const SAMPLE_ITEMS = [
+        {
+          id: 'smoked-brisket-burger',
+          name: 'Smoked Brisket Burger',
+          price: 14.50,
+          quantity: 1,
+        },
+        {
+          id: 'truffle-mushroom-pasta',
+          name: 'Truffle Mushroom Pasta',
+          price: 16.99,
+          quantity: 2,
+        },
+        {
+          id: 'roasted-garlic-flatbread',
+          name: 'Roasted Garlic Flatbread',
+          price: 6.50,
+          quantity: 1,
+        },
+      ];
+
+      const VALID_PROMOS = {
+        DINE10: { rate: 0.10, label: '10% off subtotal' },
+      };
+
+      const cartContainer = document.getElementById('cart-items-container');
+      const loadSampleBtn = document.getElementById('load-sample-btn');
+      const clearCartBtn = document.getElementById('clear-cart-btn');
+      const promoInput = document.getElementById('promo-input');
+      const applyPromoBtn = document.getElementById('apply-promo-btn');
+      const promoFeedback = document.getElementById('promo-feedback');
+      const proceedBtn = document.getElementById('proceed-checkout-btn');
+
+      const summaryCount = document.getElementById('summary-count');
+      const summarySubtotal = document.getElementById('summary-subtotal');
+      const discountRow = document.getElementById('discount-row');
+      const appliedPromoLabel = document.getElementById('applied-promo-label');
+      const summaryDiscount = document.getElementById('summary-discount');
+      const summaryTax = document.getElementById('summary-tax');
+      const summaryDelivery = document.getElementById('summary-delivery');
+      const summaryTotal = document.getElementById('summary-total');
+
+      function getSavedPromo() {
+        const code = (localStorage.getItem(PROMO_STORAGE_KEY) || '').trim().toUpperCase();
+        return VALID_PROMOS[code] ? code : '';
+      }
+
+      function setSavedPromo(code) {
+        if (code && VALID_PROMOS[code]) {
+          localStorage.setItem(PROMO_STORAGE_KEY, code);
+        } else {
+          localStorage.removeItem(PROMO_STORAGE_KEY);
+        }
+      }
+
+      function roundMoney(value) {
+        return Math.round((value + Number.EPSILON) * 100) / 100;
+      }
+
+      function renderCartPage() {
+        const cart = window.DineInCart.getCart();
+        const baseTotals = window.DineInCart.calculateTotals();
+        const promoCode = getSavedPromo();
+
+        // Toggle action buttons when cart is empty vs populated
+        clearCartBtn.hidden = cart.length === 0;
+        loadSampleBtn.hidden = cart.length > 0;
+
+        if (cart.length === 0) {
+          cartContainer.innerHTML = `
+            <div class="empty-cart-box">
+              <h3>Your cart is currently empty</h3>
+              <p>Add dishes from the menu or load sample items to test the cart and checkout flow.</p>
+              <button type="button" class="btn btn-primary" id="empty-load-sample-btn">
+                Load Sample Items
+              </button>
+            </div>
+          `;
+
+          document
+            .getElementById('empty-load-sample-btn')
+            .addEventListener('click', loadSampleItems);
+        } else {
+          cartContainer.innerHTML = cart
+            .map((item) => {
+              const lineTotal = window.DineInCart.formatCurrency(item.price * item.quantity);
+              const unitPrice = window.DineInCart.formatCurrency(item.price);
+              return `
+                <article class="cart-item" data-item-id="${escapeHtml(item.id)}">
+                  <div class="cart-item-info">
+                    <h3 class="cart-item-title">${escapeHtml(item.name)}</h3>
+                    <div class="cart-item-price">${unitPrice} each</div>
+                  </div>
+                  <div class="cart-item-actions">
+                    <div class="qty-control" aria-label="Quantity for ${escapeHtml(item.name)}">
+                      <button type="button" data-action="decrease" aria-label="Decrease quantity">-</button>
+                      <span>${item.quantity}</span>
+                      <button type="button" data-action="increase" aria-label="Increase quantity">+</button>
+                    </div>
+                    <div class="cart-item-subtotal">${lineTotal}</div>
+                    <button type="button" class="btn btn-outline btn-sm" data-action="remove">
+                      Remove
+                    </button>
+                  </div>
+                </article>
+              `;
+            })
+            .join('');
+        }
+
+        // Calculate promo discount on subtotal
+        let discountAmount = 0;
+        if (promoCode && baseTotals.subtotal > 0) {
+          discountAmount = roundMoney(baseTotals.subtotal * VALID_PROMOS[promoCode].rate);
+        }
+
+        const discountedSubtotal = Math.max(0, roundMoney(baseTotals.subtotal - discountAmount));
+        const tax = roundMoney(discountedSubtotal * window.DineInCart.DEFAULT_TAX_RATE);
+        const delivery = baseTotals.delivery;
+        const finalTotal = roundMoney(discountedSubtotal + tax + delivery);
+
+        summaryCount.textContent = String(baseTotals.itemCount);
+        summarySubtotal.textContent = window.DineInCart.formatCurrency(baseTotals.subtotal);
+
+        if (discountAmount > 0) {
+          discountRow.hidden = false;
+          appliedPromoLabel.textContent = promoCode;
+          summaryDiscount.textContent = `-${window.DineInCart.formatCurrency(discountAmount)}`;
+        } else {
+          discountRow.hidden = true;
+        }
+
+        summaryTax.textContent = window.DineInCart.formatCurrency(tax);
+        summaryDelivery.textContent = window.DineInCart.formatCurrency(delivery);
+        summaryTotal.textContent = window.DineInCart.formatCurrency(finalTotal);
+
+        if (cart.length === 0) {
+          proceedBtn.setAttribute('aria-disabled', 'true');
+          proceedBtn.classList.add('btn-secondary');
+          proceedBtn.classList.remove('btn-primary');
+        } else {
+          proceedBtn.removeAttribute('aria-disabled');
+          proceedBtn.classList.add('btn-primary');
+          proceedBtn.classList.remove('btn-secondary');
+        }
+      }
+
+      function loadSampleItems() {
+        window.DineInCart.clearCart();
+        SAMPLE_ITEMS.forEach((item) => window.DineInCart.addToCart(item));
+        renderCartPage();
+      }
+
+      function applyPromoCode() {
+        const entered = promoInput.value.trim().toUpperCase();
+        if (!entered) {
+          setSavedPromo('');
+          promoFeedback.textContent = 'Please enter a promo code (try DINE10).';
+          promoFeedback.className = 'promo-feedback is-error';
+          renderCartPage();
+          return;
+        }
+
+        if (VALID_PROMOS[entered]) {
+          setSavedPromo(entered);
+          promoFeedback.textContent = `Applied ${entered}: ${VALID_PROMOS[entered].label}.`;
+          promoFeedback.className = 'promo-feedback is-success';
+          window.DineInCart.showToast(`Promo code ${entered} applied!`);
+        } else {
+          setSavedPromo('');
+          promoFeedback.textContent = `"${entered}" is not valid. Try DINE10.`;
+          promoFeedback.className = 'promo-feedback is-error';
+        }
+
+        renderCartPage();
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = String(text);
+        return div.innerHTML;
+      }
+
+      // Handle quantity +/- and remove button clicks via delegation
+      cartContainer.addEventListener('click', (event) => {
+        const actionBtn = event.target.closest('[data-action]');
+        if (!actionBtn) return;
+
+        const row = actionBtn.closest('.cart-item');
+        if (!row) return;
+
+        const itemId = row.dataset.itemId;
+        const cart = window.DineInCart.getCart();
+        const item = cart.find((entry) => String(entry.id) === String(itemId));
+        if (!item) return;
+
+        const action = actionBtn.dataset.action;
+        if (action === 'increase') {
+          window.DineInCart.updateQuantity(itemId, item.quantity + 1);
+        } else if (action === 'decrease') {
+          window.DineInCart.updateQuantity(itemId, item.quantity - 1);
+        } else if (action === 'remove') {
+          window.DineInCart.removeFromCart(itemId);
+          window.DineInCart.showToast(`Removed "${item.name}" from cart.`);
+        }
+
+        renderCartPage();
+      });
+
+      loadSampleBtn.addEventListener('click', loadSampleItems);
+
+      clearCartBtn.addEventListener('click', () => {
+        window.DineInCart.clearCart();
+        setSavedPromo('');
+        promoInput.value = '';
+        promoFeedback.textContent = '';
+        renderCartPage();
+      });
+
+      applyPromoBtn.addEventListener('click', applyPromoCode);
+      promoInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          applyPromoCode();
+        }
+      });
+
+      proceedBtn.addEventListener('click', (event) => {
+        if (window.DineInCart.getCart().length === 0) {
+          event.preventDefault();
+          window.DineInCart.showToast('Please add items or load sample items before checking out.');
+        }
+      });
+
+      // Restore any previously applied promo code in input
+      const existingPromo = getSavedPromo();
+      if (existingPromo) {
+        promoInput.value = existingPromo;
+        promoFeedback.textContent = `Applied ${existingPromo}: ${VALID_PROMOS[existingPromo].label}.`;
+        promoFeedback.className = 'promo-feedback is-success';
+      }
+
+      renderCartPage();
+    })();
+  </script>
+</body>
+</html>
