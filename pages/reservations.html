@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table Reservation | Olive &amp; Sage</title>
+  <!-- Shared stylesheet used across all pages -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Consistent Site Header & Navigation Bar -->
+  <header class="site-header" id="home">
+    <div class="container navbar">
+      <!-- Restaurant Logo -->
+      <a href="reservations.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">&#127807;</span>
+        <span>Olive &amp; Sage</span>
+      </a>
+
+      <!-- Mobile Hamburger Toggle Button -->
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu" id="nav-menu" aria-label="Primary navigation">
+        <ul class="nav-list">
+          <li><a href="reservations.html" class="nav-link">Home</a></li>
+          <li class="nav-dropdown">
+            <a href="#" class="nav-link active" aria-haspopup="true" aria-expanded="false">Navigation</a>
+            <!-- Simple submenu linking the three module pages -->
+            <ul class="dropdown-menu">
+              <li><a href="reservations.html" class="dropdown-link active" aria-current="page">Reservations</a></li>
+              <li><a href="catering.html" class="dropdown-link">Catering</a></li>
+              <li><a href="branches.html" class="dropdown-link">Branches</a></li>
+            </ul>
+          </li>
+          <li><a href="branches.html" class="nav-link">Contact</a></li>
+          <li><a href="catering.html" class="nav-link">Blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <div class="container">
+      <!-- White Form Container Card -->
+      <section class="reservation-card" aria-labelledby="page-title">
+        <div class="card-header">
+          <span class="section-badge">Book Your Table</span>
+          <h1 id="page-title">Table Reservation</h1>
+          <p class="subtitle">
+            Choose your preferred date, time, and party size to check available seating.
+          </p>
+        </div>
+
+        <!-- Step 1: Reservation Search Form -->
+        <form id="reservation-form" class="reservation-form" novalidate>
+          <div class="form-group">
+            <label for="res-date">Date <span class="required">*</span></label>
+            <input type="date" id="res-date" name="date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="res-time">Preferred Time <span class="required">*</span></label>
+            <select id="res-time" name="time" required>
+              <option value="">-- Select a time --</option>
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="1:00 PM">1:00 PM</option>
+              <option value="2:00 PM">2:00 PM</option>
+              <option value="5:00 PM">5:00 PM</option>
+              <option value="6:00 PM">6:00 PM</option>
+              <option value="7:00 PM">7:00 PM</option>
+              <option value="8:00 PM">8:00 PM</option>
+              <option value="9:00 PM">9:00 PM</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="res-guests">Number of Guests <span class="required">*</span></label>
+            <input
+              type="number"
+              id="res-guests"
+              name="guests"
+              min="1"
+              max="20"
+              placeholder="e.g. 4"
+              required
+            />
+          </div>
+
+          <!-- Inline Validation Error Message -->
+          <p id="form-error" class="form-error" role="alert" hidden></p>
+
+          <button type="submit" id="check-btn" class="btn btn-primary btn-full">
+            Check Availability
+          </button>
+        </form>
+
+        <!-- Step 2: Loading Indicator (hidden by default) -->
+        <div id="loading-indicator" class="loading-box" hidden aria-live="polite">
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Checking available tables...</p>
+        </div>
+
+        <!-- Step 3: Available Time Slots Section (hidden until availability is checked) -->
+        <div id="slots-section" class="slots-section" hidden>
+          <div class="divider"></div>
+          <h2 class="slots-title">Available Time Slots</h2>
+          <p id="slots-summary" class="slots-summary"></p>
+
+          <!-- Time slot buttons are inserted here by script.js -->
+          <div id="slots-grid" class="slots-grid" role="group" aria-label="Available time slots"></div>
+
+          <p id="slot-error" class="form-error" role="alert" hidden></p>
+
+          <button type="button" id="confirm-btn" class="btn btn-primary btn-full">
+            Confirm Booking
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Simple Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Olive &amp; Sage Restaurant. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Step 4: Successful Booking Popup Modal -->
+  <div
+    id="booking-modal"
+    class="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    hidden
+  >
+    <div class="modal-box">
+      <div class="modal-icon" aria-hidden="true">&#10003;</div>
+      <h2 id="modal-title">Booking Confirmed!</h2>
+      <p class="modal-message">
+        Your table reservation has been successfully confirmed. We look forward to welcoming you.
+      </p>
+
+      <!-- Reservation details summary -->
+      <div id="booking-summary" class="booking-summary"></div>
+
+      <a href="reservations.html" id="back-home-btn" class="btn btn-primary btn-full">
+        Back to Home
+      </a>
+    </div>
+  </div>
+
+  <!-- Shared JavaScript file -->
+  <script src="script.js"></script>
+</body>
+</html>

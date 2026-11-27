@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catering &amp; Events | Olive &amp; Sage</title>
+  <!-- Shared stylesheet used across all pages -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Consistent Site Header & Navigation Bar -->
+  <header class="site-header" id="home">
+    <div class="container navbar">
+      <!-- Restaurant Logo -->
+      <a href="reservations.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">&#127807;</span>
+        <span>Olive &amp; Sage</span>
+      </a>
+
+      <!-- Mobile Hamburger Toggle Button -->
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu" id="nav-menu" aria-label="Primary navigation">
+        <ul class="nav-list">
+          <li><a href="reservations.html" class="nav-link">Home</a></li>
+          <li class="nav-dropdown">
+            <a href="#" class="nav-link active" aria-haspopup="true" aria-expanded="false">Navigation</a>
+            <!-- Simple submenu linking the three module pages -->
+            <ul class="dropdown-menu">
+              <li><a href="reservations.html" class="dropdown-link">Reservations</a></li>
+              <li><a href="catering.html" class="dropdown-link active" aria-current="page">Catering</a></li>
+              <li><a href="branches.html" class="dropdown-link">Branches</a></li>
+            </ul>
+          </li>
+          <li><a href="branches.html" class="nav-link">Contact</a></li>
+          <li><a href="catering.html" class="nav-link">Blog</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <div class="container">
+      <!-- White Form Container Card -->
+      <section class="page-card" aria-labelledby="catering-title">
+        <div class="card-header">
+          <span class="section-badge">Private Dining &amp; Events</span>
+          <h1 id="catering-title">Catering &amp; Events</h1>
+          <p class="subtitle">
+            Tell us about your upcoming event and request a custom catering quote.
+          </p>
+        </div>
+
+        <!-- Catering Inquiry Form -->
+        <form id="catering-form" class="site-form" novalidate>
+          <!-- 1. Event Type -->
+          <div class="form-group">
+            <label for="event-type">Event Type <span class="required">*</span></label>
+            <select id="event-type" name="eventType" required>
+              <option value="">-- Select an event type --</option>
+              <option value="Birthday">Birthday</option>
+              <option value="Corporate Event">Corporate Event</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Family Gathering">Family Gathering</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- 2. Date -->
+          <div class="form-group">
+            <label for="event-date">Date <span class="required">*</span></label>
+            <input type="date" id="event-date" name="eventDate" required />
+          </div>
+
+          <!-- 3. Guest Count -->
+          <div class="form-group">
+            <label for="event-guests">Guest Count <span class="required">*</span></label>
+            <input
+              type="number"
+              id="event-guests"
+              name="guestCount"
+              min="1"
+              max="500"
+              placeholder="e.g. 50"
+              required
+            />
+          </div>
+
+          <!-- 4. Special Requests -->
+          <div class="form-group">
+            <label for="special-requests">Special Requests</label>
+            <textarea
+              id="special-requests"
+              name="specialRequests"
+              rows="4"
+              placeholder="Share dietary requirements, menu preferences, or setup details..."
+            ></textarea>
+          </div>
+
+          <!-- 5. Package Selection -->
+          <div class="form-group">
+            <label for="package-select">Package Selection <span class="required">*</span></label>
+            <select id="package-select" name="packageSelection" required>
+              <option value="">-- Select a package --</option>
+              <option value="Standard Buffet Package">Standard Buffet Package</option>
+              <option value="Executive Platter Package">Executive Platter Package</option>
+              <option value="Full-Service Event Package">Full-Service Event Package</option>
+              <option value="Request Quote">Request Quote</option>
+            </select>
+          </div>
+
+          <!-- Inline Validation Error Message -->
+          <p id="catering-error" class="form-error" role="alert" hidden></p>
+
+          <!-- 6. Request Quote Button -->
+          <button type="submit" id="quote-btn" class="btn btn-primary btn-full">
+            Request Quote
+          </button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <!-- Simple Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Olive &amp; Sage Restaurant. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Catering Quote Success Popup Modal -->
+  <div
+    id="catering-modal"
+    class="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="catering-modal-title"
+    hidden
+  >
+    <div class="modal-box">
+      <div class="modal-icon" aria-hidden="true">&#10003;</div>
+      <h2 id="catering-modal-title">Quote Request Sent!</h2>
+      <p class="modal-message">
+        Thank you for your catering inquiry. Our events team will review your details and reply shortly.
+      </p>
+
+      <!-- Inquiry summary details -->
+      <div id="catering-summary" class="booking-summary"></div>
+
+      <button type="button" id="close-catering-modal" class="btn btn-primary btn-full">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Shared JavaScript file -->
+  <script src="script.js"></script>
+</body>
+</html>
