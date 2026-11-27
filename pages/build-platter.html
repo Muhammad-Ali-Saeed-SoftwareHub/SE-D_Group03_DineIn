@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Platter | DineIn — Pakistani Fine Dining &amp; BBQ</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/offers-builder.css">
+</head>
+<body data-page="build-platter">
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="../index.html" class="navbar-brand">
+        <span class="navbar-brand-mark" aria-hidden="true">D</span>
+        <span>
+          DineIn
+          <span class="navbar-brand-sub">Lahore &bull; Islamabad</span>
+        </span>
+      </a>
+
+      <nav class="navbar-nav-wrap" id="primary-nav" aria-label="Main navigation">
+        <ul class="navbar-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="deals.html">Deals &amp; Offers</a></li>
+          <li><a href="build-platter.html" class="active" aria-current="page">Build Your Platter</a></li>
+          <li><a href="gift-vouchers.html">Gift Vouchers</a></li>
+        </ul>
+      </nav>
+
+      <div class="navbar-actions">
+        <button type="button" class="cart-trigger" data-open-cart aria-label="Open order cart">
+          <span>Order Tray</span>
+          <span class="cart-count-pill" data-cart-count>0</span>
+        </button>
+        <button
+          type="button"
+          class="navbar-toggle"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          aria-label="Toggle navigation menu"
+        >
+          &#9776;
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="badge badge-solid">Custom Charcoal Grill</span>
+      <h1>Build Your Own BBQ Platter</h1>
+      <p>
+        Compose your table’s ideal sizzler in four steps: pick your platter size, hand-select
+        skewer cuts, choose fresh tandoori breads, and tailor your sides and spice level.
+      </p>
+      <div class="hero-meta">
+        <span>Step-by-Step Live PKR Pricing</span>
+        <span>Fresh Off the Sigri</span>
+        <span>Complimentary Mint Raita &amp; Chutney</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="container module-main">
+    <div id="platter-builder-root" class="builder-layout">
+      <div class="builder-steps">
+        <!-- Step 1: Platter Size -->
+        <section id="step-platter-size" class="form-card step-card" aria-labelledby="step1-title">
+          <div class="step-header">
+            <div class="step-title-group">
+              <span class="step-number">1</span>
+              <div>
+                <h2 id="step1-title">Choose Platter Size</h2>
+                <p class="step-subtitle">Includes base BBQ skewer allowance and table service</p>
+              </div>
+            </div>
+            <span class="badge">Required</span>
+          </div>
+
+          <div class="option-grid option-grid-3">
+            <label class="option-card">
+              <input type="radio" name="platterSize" value="duo">
+              <div class="option-card-top">
+                <span class="option-card-name">Duo Charcoal Platter</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Serves 2 &bull; Includes 2 BBQ selections</span>
+              <span class="option-card-price">PKR 2,200</span>
+            </label>
+
+            <label class="option-card is-selected">
+              <input type="radio" name="platterSize" value="family" checked>
+              <div class="option-card-top">
+                <span class="option-card-name">Family Dastarkhwan</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Serves 4 &bull; Includes 4 BBQ selections</span>
+              <span class="option-card-price">PKR 4,100</span>
+            </label>
+
+            <label class="option-card">
+              <input type="radio" name="platterSize" value="mehfil">
+              <div class="option-card-top">
+                <span class="option-card-name">Grand Mehfil Platter</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Serves 6 &bull; Includes 6 BBQ selections</span>
+              <span class="option-card-price">PKR 5,900</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Step 2: BBQ Items -->
+        <section id="step-bbq-items" class="form-card step-card" aria-labelledby="step2-title">
+          <div class="step-header">
+            <div class="step-title-group">
+              <span class="step-number">2</span>
+              <div>
+                <h2 id="step2-title">Select BBQ &amp; Grill Items</h2>
+                <p class="step-subtitle">
+                  Pick at least 2 items. Extra cuts beyond your platter allowance add listed PKR rates.
+                </p>
+              </div>
+            </div>
+            <span class="badge badge-charcoal" id="bbq-counter-badge">2 / 4 included</span>
+          </div>
+
+          <div class="option-grid">
+            <label class="option-card is-checkbox is-selected">
+              <input type="checkbox" name="bbqItem" value="malai-boti" checked>
+              <div class="option-card-top">
+                <span class="option-card-name">Chicken Malai Boti</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Cream, green cardamom &amp; white pepper skewer</span>
+              <span class="option-card-price">Included / +PKR 650 extra</span>
+            </label>
+
+            <label class="option-card is-checkbox is-selected">
+              <input type="checkbox" name="bbqItem" value="seekh-kabab" checked>
+              <div class="option-card-top">
+                <span class="option-card-name">Beef Seekh Kabab</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Hand-minced chuck, roasted cumin &amp; fresh coriander</span>
+              <span class="option-card-price">Included / +PKR 550 extra</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="bbqItem" value="mutton-chops">
+              <div class="option-card-top">
+                <span class="option-card-name">Peshawari Mutton Chops</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">24-hour marinated prime rack chops</span>
+              <span class="option-card-price">Included / +PKR 950 extra</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="bbqItem" value="reshmi-kabab">
+              <div class="option-card-top">
+                <span class="option-card-name">Chicken Reshmi Kabab</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Silky spiced chicken mince kissed with butter</span>
+              <span class="option-card-price">Included / +PKR 600 extra</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="bbqItem" value="lahori-chargha">
+              <div class="option-card-top">
+                <span class="option-card-name">Lahori Chargha Quarter</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Crisp chaat-masala &amp; lemon-steamed roast</span>
+              <span class="option-card-price">Included / +PKR 700 extra</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="bbqItem" value="chapli-kabab">
+              <div class="option-card-top">
+                <span class="option-card-name">Peshawari Chapli Kabab</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Crushed pomegranate seed &amp; charred tomato patty</span>
+              <span class="option-card-price">Included / +PKR 580 extra</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="bbqItem" value="behari-boti">
+              <div class="option-card-top">
+                <span class="option-card-name">Beef Behari Boti</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Smoky mustard-oil &amp; fried-onion tender strips</span>
+              <span class="option-card-price">Included / +PKR 690 extra</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="bbqItem" value="fish-tikka">
+              <div class="option-card-top">
+                <span class="option-card-name">Grilled Pomfret Fish Tikka</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Ajwain, turmeric &amp; fresh lime charcoal sear</span>
+              <span class="option-card-price">Included / +PKR 880 extra</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Step 3: Tandoori Breads -->
+        <section id="step-breads" class="form-card step-card" aria-labelledby="step3-title">
+          <div class="step-header">
+            <div class="step-title-group">
+              <span class="step-number">3</span>
+              <div>
+                <h2 id="step3-title">Choose Tandoori Breads</h2>
+                <p class="step-subtitle">Baked fresh in our clay tandoor — pick at least 1</p>
+              </div>
+            </div>
+            <span class="badge">Required</span>
+          </div>
+
+          <div class="option-grid">
+            <label class="option-card is-checkbox is-selected">
+              <input type="checkbox" name="breadItem" value="roghni-naan" checked>
+              <div class="option-card-top">
+                <span class="option-card-name">Roghni Naan</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Toasted sesame seeds &amp; brushed desi ghee</span>
+              <span class="option-card-price">Included</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="breadItem" value="tandoori-roti">
+              <div class="option-card-top">
+                <span class="option-card-name">Tandoori Khamiri Roti</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Whole-wheat leavened clay-oven flatbread</span>
+              <span class="option-card-price">Included</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="breadItem" value="garlic-naan">
+              <div class="option-card-top">
+                <span class="option-card-name">Garlic Butter Naan</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Roasted minced garlic &amp; coriander glaze</span>
+              <span class="option-card-price">+PKR 180</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="breadItem" value="kalonji-cheese">
+              <div class="option-card-top">
+                <span class="option-card-name">Kalonji Cheese Naan</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Molten mozzarella &amp; black-seed crust</span>
+              <span class="option-card-price">+PKR 280</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="breadItem" value="peshawari-naan">
+              <div class="option-card-top">
+                <span class="option-card-name">Peshawari Dry-Fruit Naan</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Stuffed with almonds, coconut &amp; pistachio</span>
+              <span class="option-card-price">+PKR 320</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Step 4: Sides, Chutneys & Spice Notes -->
+        <section id="step-sides-spice" class="form-card step-card" aria-labelledby="step4-title">
+          <div class="step-header">
+            <div class="step-title-group">
+              <span class="step-number">4</span>
+              <div>
+                <h2 id="step4-title">Sides, Chutneys &amp; Spice Notes</h2>
+                <p class="step-subtitle">Customize your accompaniments and grill heat</p>
+              </div>
+            </div>
+            <span class="badge badge-gold">Optional Add-ons</span>
+          </div>
+
+          <div class="option-grid">
+            <label class="option-card is-checkbox is-selected">
+              <input type="checkbox" name="sideItem" value="mint-raita" checked>
+              <div class="option-card-top">
+                <span class="option-card-name">Mint &amp; Coriander Raita</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Chilled whipped yogurt &amp; roasted cumin</span>
+              <span class="option-card-price">Complimentary</span>
+            </label>
+
+            <label class="option-card is-checkbox is-selected">
+              <input type="checkbox" name="sideItem" value="imli-chutney" checked>
+              <div class="option-card-top">
+                <span class="option-card-name">Imli &amp; Khajoor Chutney</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Sweet-tangy tamarind &amp; date glaze</span>
+              <span class="option-card-price">Complimentary</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="sideItem" value="kachumber-salad">
+              <div class="option-card-top">
+                <span class="option-card-name">Kachumber &amp; Pickled Onion</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Sumac red onions, cucumber &amp; lime</span>
+              <span class="option-card-price">+PKR 180</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="sideItem" value="kabuli-pulao">
+              <div class="option-card-top">
+                <span class="option-card-name">Kabuli Pulao Sharing Bowl</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Basmati rice with caramelized carrots &amp; raisins</span>
+              <span class="option-card-price">+PKR 750</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="sideItem" value="dal-makhani">
+              <div class="option-card-top">
+                <span class="option-card-name">Smoked Dal Makhani</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">12-hour black lentils finished with cream</span>
+              <span class="option-card-price">+PKR 680</span>
+            </label>
+
+            <label class="option-card is-checkbox">
+              <input type="checkbox" name="sideItem" value="shahi-kulfi">
+              <div class="option-card-top">
+                <span class="option-card-name">Matka Shahi Kulfi Duo</span>
+                <span class="option-check-dot" aria-hidden="true"></span>
+              </div>
+              <span class="option-card-meta">Earthen-pot saffron &amp; pistachio kulfi</span>
+              <span class="option-card-price">+PKR 520</span>
+            </label>
+          </div>
+
+          <div style="margin-top:1.25rem;">
+            <span class="form-label">Select Grill Spice Level</span>
+            <div class="spice-grid" role="radiogroup" aria-label="Spice level">
+              <label class="option-card">
+                <input type="radio" name="spiceLevel" value="Mild &amp; Aromatic">
+                <div class="option-card-top">
+                  <span class="option-card-name">Mild</span>
+                  <span class="option-check-dot" aria-hidden="true"></span>
+                </div>
+                <span class="option-card-meta">Kid-friendly</span>
+              </label>
+
+              <label class="option-card is-selected">
+                <input type="radio" name="spiceLevel" value="Classic Lahori Medium" checked>
+                <div class="option-card-top">
+                  <span class="option-card-name">Medium</span>
+                  <span class="option-check-dot" aria-hidden="true"></span>
+                </div>
+                <span class="option-card-meta">House balance</span>
+              </label>
+
+              <label class="option-card">
+                <input type="radio" name="spiceLevel" value="Tez Charcoal Spicy">
+                <div class="option-card-top">
+                  <span class="option-card-name">Tez Spicy</span>
+                  <span class="option-check-dot" aria-hidden="true"></span>
+                </div>
+                <span class="option-card-meta">Green chili kick</span>
+              </label>
+
+              <label class="option-card">
+                <input type="radio" name="spiceLevel" value="Extra Mirch">
+                <div class="option-card-top">
+                  <span class="option-card-name">Extra Mirch</span>
+                  <span class="option-check-dot" aria-hidden="true"></span>
+                </div>
+                <span class="option-card-meta">Fiery sear</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:1.15rem;">
+            <label for="platter-spice-notes" class="form-label">Special Kitchen &amp; Grill Notes</label>
+            <textarea
+              id="platter-spice-notes"
+              class="form-control"
+              rows="3"
+              maxlength="200"
+              placeholder="e.g. Well-charred seekh kababs, extra lemon wedges, serve chutneys separately..."
+            ></textarea>
+          </div>
+        </section>
+      </div>
+
+      <!-- Sticky Platter Summary Sidebar -->
+      <aside class="builder-sidebar" aria-label="Live platter order summary">
+        <div class="summary-box">
+          <div class="summary-header">
+            <h2>Your Platter Summary</h2>
+            <span class="badge">Live Total</span>
+          </div>
+
+          <div id="platter-summary-lines" class="summary-lines"></div>
+
+          <hr class="summary-divider">
+
+          <div class="summary-total-row">
+            <span>Platter Total</span>
+            <span id="platter-total">PKR 4,100</span>
+          </div>
+
+          <div id="platter-alert" class="alert" role="status" style="margin-bottom:0.85rem;" hidden></div>
+
+          <div class="summary-actions">
+            <button type="button" id="add-platter-btn" class="btn-primary btn-block">
+              Add Custom Platter to Cart
+            </button>
+            <button type="button" id="reset-platter-btn" class="btn-outline btn-block">
+              Reset Platter Selections
+            </button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>DineIn Pakistani Fine Dining &amp; BBQ</h3>
+          <p>
+            Every custom platter is skewered to order and finished with smoked butter at your
+            table.
+          </p>
+        </div>
+        <div>
+          <h3>Explore Module</h3>
+          <ul class="footer-links">
+            <li><a href="../index.html">Back to Home</a></li>
+            <li><a href="deals.html">Deals &amp; Offers</a></li>
+            <li><a href="build-platter.html">Build Your Platter</a></li>
+            <li><a href="gift-vouchers.html">Gift Vouchers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Flagship Kitchens</h3>
+          <ul class="footer-links">
+            <li>MM Alam Road, Gulberg III, Lahore</li>
+            <li>Kohsar Market, Sector F-7, Islamabad</li>
+            <li>Open Daily: 12:30 PM – 12:30 AM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 DineIn Hospitality Group. All rights reserved.</span>
+        <span>All rates listed in Pakistani Rupees (PKR).</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/offers-builder.js"></script>
+</body>
+</html>

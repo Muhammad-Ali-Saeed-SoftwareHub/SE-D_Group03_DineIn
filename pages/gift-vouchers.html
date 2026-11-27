@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gift Vouchers | DineIn — Pakistani Fine Dining &amp; BBQ</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/offers-builder.css">
+</head>
+<body data-page="gift-vouchers">
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="../index.html" class="navbar-brand">
+        <span class="navbar-brand-mark" aria-hidden="true">D</span>
+        <span>
+          DineIn
+          <span class="navbar-brand-sub">Lahore &bull; Islamabad</span>
+        </span>
+      </a>
+
+      <nav class="navbar-nav-wrap" id="primary-nav" aria-label="Main navigation">
+        <ul class="navbar-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="deals.html">Deals &amp; Offers</a></li>
+          <li><a href="build-platter.html">Build Your Platter</a></li>
+          <li><a href="gift-vouchers.html" class="active" aria-current="page">Gift Vouchers</a></li>
+        </ul>
+      </nav>
+
+      <div class="navbar-actions">
+        <button type="button" class="cart-trigger" data-open-cart aria-label="Open order cart">
+          <span>Order Tray</span>
+          <span class="cart-count-pill" data-cart-count>0</span>
+        </button>
+        <button
+          type="button"
+          class="navbar-toggle"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          aria-label="Toggle navigation menu"
+        >
+          &#9776;
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="badge badge-solid">Memorable Hospitality</span>
+      <h1>DineIn Fine-Dining Gift Vouchers</h1>
+      <p>
+        Share an evening of coal-fired kebabs, royal karahi, and artisanal desserts for Eid
+        gatherings, weddings, birthdays, and corporate appreciation across Lahore and Islamabad.
+      </p>
+      <div class="hero-meta">
+        <span>Redeemable at All DineIn Branches</span>
+        <span>Valid for 12 Months</span>
+        <span>Instant Digital or Gold-Foil Box</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="container module-main">
+    <div class="voucher-layout">
+      <form id="voucher-form" class="voucher-form-stack" novalidate>
+        <!-- Amount & Occasion -->
+        <section class="form-card" aria-labelledby="voucher-amount-heading">
+          <div class="step-header">
+            <div class="step-title-group">
+              <span class="step-number">1</span>
+              <div>
+                <h2 id="voucher-amount-heading">Select Voucher Value &amp; Occasion</h2>
+                <p class="step-subtitle">Choose a preset PKR amount or enter a custom gift value</p>
+              </div>
+            </div>
+            <span class="badge">PKR 1,000 – 100,000</span>
+          </div>
+
+          <div class="amount-grid" role="group" aria-label="Preset gift voucher amounts">
+            <button type="button" class="amount-btn" data-voucher-amount="2500">PKR 2,500</button>
+            <button type="button" class="amount-btn is-active" data-voucher-amount="5000">PKR 5,000</button>
+            <button type="button" class="amount-btn" data-voucher-amount="10000">PKR 10,000</button>
+            <button type="button" class="amount-btn" data-voucher-amount="15000">PKR 15,000</button>
+            <button type="button" class="amount-btn" data-voucher-amount="25000">PKR 25,000</button>
+            <button type="button" class="amount-btn" data-voucher-amount="custom">Custom Amount</button>
+          </div>
+
+          <div id="custom-amount-wrap" class="form-group" style="margin-bottom:1.1rem;" hidden>
+            <label for="voucher-custom-amount" class="form-label">Enter Custom Amount (PKR)</label>
+            <input
+              type="number"
+              id="voucher-custom-amount"
+              class="form-control"
+              min="1000"
+              max="100000"
+              step="100"
+              placeholder="e.g. 7500"
+            >
+            <span class="field-error" id="error-custom-amount"></span>
+          </div>
+
+          <div class="form-group">
+            <span class="form-label">Occasion Theme</span>
+            <div class="theme-pills" role="group" aria-label="Gift occasion theme">
+              <button type="button" class="theme-pill is-active" data-voucher-theme="Eid Mubarak" aria-pressed="true">
+                Eid Mubarak
+              </button>
+              <button type="button" class="theme-pill" data-voucher-theme="Wedding &amp; Mehndi" aria-pressed="false">
+                Wedding &amp; Mehndi
+              </button>
+              <button type="button" class="theme-pill" data-voucher-theme="Birthday Feast" aria-pressed="false">
+                Birthday Feast
+              </button>
+              <button type="button" class="theme-pill" data-voucher-theme="Corporate Appreciation" aria-pressed="false">
+                Corporate Appreciation
+              </button>
+              <button type="button" class="theme-pill" data-voucher-theme="Family Dastarkhwan" aria-pressed="false">
+                Family Dastarkhwan
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recipient & Sender Details -->
+        <section class="form-card" aria-labelledby="voucher-details-heading">
+          <div class="step-header">
+            <div class="step-title-group">
+              <span class="step-number">2</span>
+              <div>
+                <h2 id="voucher-details-heading">Recipient &amp; Sender Details</h2>
+                <p class="step-subtitle">Your live preview updates as you personalize the voucher</p>
+              </div>
+            </div>
+            <span class="badge">Required</span>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="recipient-name" class="form-label">Recipient Full Name</label>
+              <input
+                type="text"
+                id="recipient-name"
+                class="form-control"
+                placeholder="e.g. Ayesha &amp; Hamza Tariq"
+                required
+              >
+              <span class="field-error" id="error-recipient-name"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="recipient-contact" class="form-label">Recipient Email or Mobile</label>
+              <input
+                type="text"
+                id="recipient-contact"
+                class="form-control"
+                placeholder="ayesha@example.com or 0300-1234567"
+                required
+              >
+              <span class="field-error" id="error-recipient-contact"></span>
+            </div>
+          </div>
+
+          <div class="form-row-2" style="margin-top:0.75rem;">
+            <div class="form-group">
+              <label for="sender-name" class="form-label">Your Name (From)</label>
+              <input
+                type="text"
+                id="sender-name"
+                class="form-control"
+                placeholder="e.g. Bilal Siddiqui"
+                required
+              >
+              <span class="field-error" id="error-sender-name"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="delivery-date" class="form-label">Preferred Delivery Date</label>
+              <input type="date" id="delivery-date" class="form-control" required>
+              <span class="field-error" id="error-delivery-date"></span>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:0.75rem;">
+            <label for="voucher-message" class="form-label">Personal Note (Optional)</label>
+            <textarea
+              id="voucher-message"
+              class="form-control"
+              rows="3"
+              maxlength="160"
+              placeholder="Write a warm note for your family, friend, or colleague..."
+            ></textarea>
+            <span class="char-counter" id="message-char-count">0 / 160 characters</span>
+          </div>
+
+          <div class="form-group" style="margin-top:0.75rem;">
+            <span class="form-label">Presentation Format</span>
+            <div class="option-grid" style="margin-top:0.35rem;">
+              <label class="option-card is-selected">
+                <input type="radio" name="deliveryFormat" value="digital" checked>
+                <div class="option-card-top">
+                  <span class="option-card-name">Digital E-Voucher</span>
+                  <span class="option-check-dot" aria-hidden="true"></span>
+                </div>
+                <span class="option-card-meta">Sent via email &amp; WhatsApp-ready PDF</span>
+                <span class="option-card-price">Complimentary (PKR 0)</span>
+              </label>
+
+              <label class="option-card">
+                <input type="radio" name="deliveryFormat" value="printed">
+                <div class="option-card-top">
+                  <span class="option-card-name">Gold-Foil Keepsake Box</span>
+                  <span class="option-check-dot" aria-hidden="true"></span>
+                </div>
+                <span class="option-card-meta">Embossed cream card in charcoal gift sleeve</span>
+                <span class="option-card-price">+PKR 350</span>
+              </label>
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <!-- Sticky Live Card Preview + Summary Box -->
+      <aside class="voucher-sidebar" aria-label="Live gift voucher preview and checkout summary">
+        <div class="gift-card-preview" aria-live="polite">
+          <div class="gift-card-top">
+            <div class="gift-card-brand">
+              DineIn
+              <span>Pakistani Fine Dining &amp; BBQ</span>
+            </div>
+            <span class="gift-card-occasion" id="preview-occasion">Eid Mubarak</span>
+          </div>
+
+          <div class="gift-card-value" id="preview-amount">PKR 5,000</div>
+
+          <p class="gift-card-message" id="preview-message">
+            "Wishing you an unforgettable evening of charcoal-grilled flavours and warm hospitality."
+          </p>
+
+          <div class="gift-card-footer">
+            <div>
+              <span>Presented To</span>
+              <strong id="preview-recipient">Honoured Guest</strong>
+              <span style="display:block;margin-top:0.2rem;">From: <span id="preview-sender">Your Name</span></span>
+            </div>
+            <div class="gift-card-code">
+              <div id="preview-code">DINE-DINE-50</div>
+              <div style="margin-top:0.25rem;color:#D7CEC3;" id="preview-format">Digital E-Voucher (Instant)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-box">
+          <div class="summary-header">
+            <h2>Voucher Summary</h2>
+            <span class="badge badge-gold">12-Month Validity</span>
+          </div>
+
+          <div class="summary-lines">
+            <div class="summary-line">
+              <span>Gift Voucher Value</span>
+              <strong id="summary-voucher-value">PKR 5,000</strong>
+            </div>
+            <div class="summary-line">
+              <span>Format (<span id="summary-format-label">Digital E-Voucher (Instant)</span>)</span>
+              <span id="summary-packaging-fee">PKR 0</span>
+            </div>
+          </div>
+
+          <hr class="summary-divider">
+
+          <div class="summary-total-row">
+            <span>Total Payable</span>
+            <span id="summary-voucher-total">PKR 5,000</span>
+          </div>
+
+          <div id="voucher-alert" class="alert" role="status" style="margin-bottom:0.85rem;" hidden></div>
+
+          <button type="submit" form="voucher-form" class="btn-primary btn-block">
+            Add Gift Voucher to Cart
+          </button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>DineIn Pakistani Fine Dining &amp; BBQ</h3>
+          <p>
+            Gift vouchers are honoured for dine-in, family platters, and seasonal tasting menus at
+            our Lahore and Islamabad dining rooms.
+          </p>
+        </div>
+        <div>
+          <h3>Explore Module</h3>
+          <ul class="footer-links">
+            <li><a href="../index.html">Back to Home</a></li>
+            <li><a href="deals.html">Deals &amp; Offers</a></li>
+            <li><a href="build-platter.html">Build Your Platter</a></li>
+            <li><a href="gift-vouchers.html">Gift Vouchers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Flagship Kitchens</h3>
+          <ul class="footer-links">
+            <li>MM Alam Road, Gulberg III, Lahore</li>
+            <li>Kohsar Market, Sector F-7, Islamabad</li>
+            <li>Open Daily: 12:30 PM – 12:30 AM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 DineIn Hospitality Group. All rights reserved.</span>
+        <span>All rates listed in Pakistani Rupees (PKR).</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/offers-builder.js"></script>
+</body>
+</html>
