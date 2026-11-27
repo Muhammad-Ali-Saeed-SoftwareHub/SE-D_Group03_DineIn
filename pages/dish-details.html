@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dish Details | DineIn Restaurant</title>
+  <meta name="description" content="Inspect ingredients, culinary notes, portion pricing, and add dishes to your DineIn order." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <!-- Consistent Site Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand-logo" aria-label="DineIn Home">
+        <span class="brand-mark">D</span>
+        <span>DineIn</span>
+      </a>
+
+      <nav id="primary-nav" class="nav-links" aria-label="Primary Navigation">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="full-menu.html" class="nav-link">Full Menu</a>
+        <a href="dish-details.html" class="nav-link active">Dish Details</a>
+        <a href="../index.html#about" class="nav-link">Our Story</a>
+        <a href="../index.html#offers" class="nav-link">Special Offers</a>
+        <a href="../index.html#testimonials" class="nav-link">Reviews</a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="cart-btn" data-open-cart aria-label="Open order cart">
+          <span>Order</span>
+          <span class="cart-count" data-cart-count>0</span>
+        </button>
+        <button type="button" id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container" id="dish-detail-container">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="../index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <a href="full-menu.html">Full Menu</a>
+          <span aria-hidden="true">/</span>
+          <span id="breadcrumb-dish-name" class="breadcrumb-current">Dish Details</span>
+        </nav>
+
+        <!-- Two-Column Dish Details -->
+        <div class="dish-detail-grid">
+          <div class="dish-detail-media">
+            <img id="detail-image" src="../images/dish-steak.jpg" alt="Wood-Fired Ribeye Steak" />
+            <span id="detail-tag" class="dish-tag dish-tag-accent">Chef's Signature</span>
+          </div>
+
+          <div class="dish-detail-info">
+            <span id="detail-category" class="dish-category">Mains</span>
+            <h1 id="detail-title" class="dish-detail-title">Wood-Fired Ribeye Steak</h1>
+
+            <div id="detail-meta" class="dish-detail-meta">
+              <span>Prep time: <strong>22 mins</strong></span>
+              <span>Energy: <strong>780 kcal</strong></span>
+              <span>Guest Rating: <strong>4.9 / 5.0</strong></span>
+            </div>
+
+            <div id="detail-price" class="dish-detail-price">$34.00</div>
+            <p id="detail-description" class="dish-detail-desc">
+              Loading dish description...
+            </p>
+
+            <div class="ingredients-block">
+              <h2>Key Ingredients</h2>
+              <ul id="detail-ingredients" class="ingredients-list"></ul>
+              <p id="detail-dietary" style="margin-top: 12px; font-size: 0.88rem; color: var(--color-muted);"></p>
+            </div>
+
+            <div class="purchase-controls">
+              <div class="quantity-selector" aria-label="Quantity selector">
+                <button type="button" id="qty-dec" class="qty-btn" aria-label="Decrease quantity">&minus;</button>
+                <span id="qty-value" class="qty-value" aria-live="polite">1</span>
+                <button type="button" id="qty-inc" class="qty-btn" aria-label="Increase quantity">+</button>
+              </div>
+              <button type="button" id="detail-add-to-cart" class="btn btn-primary add-to-cart-main">
+                Add to Cart
+              </button>
+            </div>
+
+            <div id="detail-feedback" class="feedback-banner" role="status" aria-live="polite"></div>
+
+            <div style="margin-top: 20px;">
+              <a href="full-menu.html" class="btn btn-soft btn-sm">&larr; Back to Full Menu</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Dishes -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Pair With</span>
+          <h2 class="section-title">You May Also Enjoy</h2>
+        </div>
+        <div id="related-dishes-grid" class="grid-3">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Consistent Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="brand-logo">
+            <span class="brand-mark">D</span>
+            <span>DineIn</span>
+          </a>
+          <p>
+            Modern wood-fired dining crafted with seasonal ingredients, artisan technique, and warm hospitality.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Explore</h3>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="full-menu.html">Full Menu</a></li>
+            <li><a href="dish-details.html">Signature Dish</a></li>
+            <li><a href="../index.html#about">Our Story</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Hours</h3>
+          <ul class="footer-links">
+            <li>Mon – Thu: 12:00 PM – 10:30 PM</li>
+            <li>Fri – Sun: 12:00 PM – 11:30 PM</li>
+            <li>Weekend Brunch: 10:00 AM – 2:00 PM</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="footer-heading">Visit Us</h3>
+          <ul class="footer-links">
+            <li>42 Courtyard Avenue, Gulberg</li>
+            <li>hello@dinein-restaurant.com</li>
+            <li>+92 (51) 555-0194</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 DineIn Restaurant — SE-D Group 03. All rights reserved.</span>
+        <span>Crafted with HTML5, CSS3 &amp; Vanilla JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Slide-Over Drawer -->
+  <div id="cart-backdrop" class="cart-backdrop" aria-hidden="true"></div>
+  <aside id="cart-drawer" class="cart-drawer" aria-label="Order Cart" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <h2>Your Order</h2>
+      <button type="button" id="cart-close-btn" class="cart-close-btn" aria-label="Close order cart">&times;</button>
+    </div>
+    <div id="cart-drawer-body" class="cart-drawer-body"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$0.00</span>
+      </div>
+      <div class="cart-footer-actions">
+        <button type="button" id="cart-clear-btn" class="btn btn-secondary btn-sm">Clear</button>
+        <button type="button" id="cart-checkout-btn" class="btn btn-primary btn-sm">Place Order</button>
+      </div>
+    </div>
+  </aside>
+
+  <div id="dinein-toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="../js/menu-data.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
