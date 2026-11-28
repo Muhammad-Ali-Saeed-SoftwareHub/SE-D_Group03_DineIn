@@ -1,224 +1,266 @@
+// Name: Badiuzzaman Mian
+// Roll no: i263171
+// Section: SE-D
 /**
- * DineIn — Page-Specific Logic
- * Powers pages/deals.html, pages/build-platter.html, and pages/gift-vouchers.html
- * Relies on window.DineInCart from js/app.js
+ * Dine in — Page-Specific Logic for Member 3 Module
+ * Powers:
+ *   1. pages/deals.html (Countdown timer, live search/category filter, promo codes, deal cart)
+ *   2. pages/build-platter.html (4-step custom platter builder with live USD & kcal totals)
+ *   3. pages/gift-vouchers.html (e-Gift / Physical voucher configurator & live preview)
+ *
+ * Interoperates with window.DineInCart from js/app3169.js and checkout.html promo key.
  */
 (function (window, document) {
   'use strict';
 
-  function getCartAPI() {
+  const PROMO_STORAGE_KEY = 'dinein_promo_v1';
+
+  const PROMO_CODES = {
+    DINE10: {
+      code: 'DINE10',
+      type: 'percent',
+      value: 10,
+      description: '10% off your subtotal (synced automatically with Cart & Checkout)',
+    },
+    FEAST5: {
+      code: 'FEAST5',
+      type: 'fixed',
+      value: 5,
+      description: '$5.00 off any combo deal or custom platter order',
+    },
+    WELCOME10: {
+      code: 'WELCOME10',
+      type: 'percent',
+      value: 10,
+      description: '10% welcome savings on your Dine in order',
+    },
+  };
+
+  function cartApi() {
     return window.DineInCart;
   }
 
-  function escapeHTML(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+  function addItemToCart(item) {
+    const api = cartApi();
+    if (!api) return;
+    if (typeof api.addToCart === 'function') {
+      api.addToCart(item);
+    } else if (typeof api.addItem === 'function') {
+      api.addItem(item);
+    }
+  }
+
+  function formatUSD(amount) {
+    const api = cartApi();
+    if (api && typeof api.formatCurrency === 'function') {
+      return api.formatCurrency(amount);
+    }
+    return `$${Number(amount || 0).toFixed(2)}`;
+  }
+
+  function notifyToast(message) {
+    const api = cartApi();
+    if (api && typeof api.showToast === 'function') {
+      api.showToast(message);
+    }
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = String(text);
+    return div.innerHTML;
   }
 
   /* ========================================================================
      1. DEALS & OFFERS PAGE (pages/deals.html)
      ======================================================================== */
   function initDealsPage() {
-    var gridEl = document.getElementById('deals-grid');
+    const gridEl = document.getElementById('deals-grid');
     if (!gridEl) return;
 
-    var api = getCartAPI();
-    var searchInput = document.getElementById('deals-search');
-    var clearSearchBtn = document.getElementById('deals-search-clear');
-    var categoryBtns = document.querySelectorAll('[data-category]');
-    var countEl = document.getElementById('deals-result-count');
-    var emptyStateEl = document.getElementById('deals-empty-state');
-    var resetFiltersBtn = document.getElementById('deals-reset-btn');
+    const countdownEl = document.getElementById('deals-countdown');
+    const searchInput = document.getElementById('deals-search');
+    const clearSearchBtn = document.getElementById('deals-search-clear');
+    const categoryBtns = document.querySelectorAll('[data-category]');
+    const countBadge = document.getElementById('deals-result-count');
+    const emptyStateEl = document.getElementById('deals-empty-state');
+    const resetBtn = document.getElementById('deals-reset-btn');
 
-    var promoForm = document.getElementById('promo-form');
-    var promoInput = document.getElementById('promo-code-input');
-    var promoAlert = document.getElementById('promo-alert');
-    var promoChips = document.querySelectorAll('[data-promo-fill]');
+    const promoForm = document.getElementById('promo-form');
+    const promoInput = document.getElementById('promo-code-input');
+    const promoAlert = document.getElementById('promo-alert');
+    const promoChips = document.querySelectorAll('[data-promo-fill]');
 
-    var DEALS = [
+    const DEALS = [
       {
-        id: 'deal-shahi-charcoal',
-        name: 'Shahi Charcoal Platter',
-        urduTag: 'شاہی کوئلہ پلیٹر',
-        category: 'Family Platters',
+        id: 'deal-hearthside-feast',
+        name: 'Hearthside Family Feast',
+        category: 'Family Combos',
         serves: 'Serves 4',
-        badge: 'Chef Signature',
-        price: 4450,
-        originalPrice: 5400,
-        description:
-          'Signature coal-fired feast curated for family dinners with saffron rice and warm tandoori breads.',
-        highlights: [
-          'Chicken Malai Boti, Beef Seekh & Mutton Chops',
-          '4 Roghni Naans, Mint Raita & Tamarind Chutney',
-          'Complimentary Kashmiri Chai for 4'
-        ]
+        badge: 'Save $9.10',
+        originalPrice: 45.00,
+        price: 35.90,
+        description: 'Our signature sharing table with smoky ribs, herb-roasted half chicken, and warm sourdough.',
+        includes: [
+          'Full Rack Hickory Baby Back Ribs & Herb Half Chicken',
+          'Creamy Baked Mac & Cheese & Classic Caesar Salad',
+          '4 Warm Garlic Rosemary Sourdough Loaves',
+        ],
       },
       {
-        id: 'deal-lahori-duo',
-        name: 'Lahori Tikka & Seekh Duo',
-        urduTag: 'لاہوری تکہ اور سیخ کباب',
-        category: 'BBQ & Grill',
+        id: 'deal-ribeye-lobster-duo',
+        name: 'Prime Ribeye & Lobster Duo',
+        category: 'Pasta & Mains',
         serves: 'Serves 2',
-        badge: '18% Off',
-        price: 2350,
-        originalPrice: 2850,
-        description:
-          'Smoky charcoal chicken leg tikka paired with hand-minced spiced beef seekh kababs off the skewer.',
-        highlights: [
-          '2 Full Chicken Tikka Legs & 4 Beef Seekh Kababs',
-          '2 Garlic Butter Naans & Kachumber Salad',
-          'House Green Chili & Tamarind Dips'
-        ]
+        badge: 'Save $15.40',
+        originalPrice: 55.00,
+        price: 39.60,
+        description: 'Char-grilled 10oz ribeye steaks paired with garlic butter lobster skewers and truffle mash.',
+        includes: [
+          'Two 10oz Charred Prime Ribeye Steaks',
+          'Garlic Butter Lobster Tail Skewers',
+          'Truffle Mashed Potatoes & Grilled Asparagus',
+        ],
       },
       {
-        id: 'deal-exec-karahi',
-        name: 'Executive Karahi & Naan Lunch',
-        urduTag: 'ایگزیکٹو چکن کڑاہی لنچ',
-        category: 'Lunch Combos',
-        serves: 'Serves 1–2',
-        badge: 'Weekday Special',
-        price: 1650,
-        originalPrice: 2050,
-        description:
-          'Wok-seared tomato and ginger Chicken Shinwari Karahi cooked to order for midday dining.',
-        highlights: [
-          'Half-Kg Boneless Shinwari Karahi',
-          '2 Tandoori Khamiri Rotis & Fresh Mint Raita',
-          'Chilled Mint Margarita Pitcher'
-        ]
-      },
-      {
-        id: 'deal-grand-mehfil',
-        name: 'Grand Mehfil Dastarkhwan',
-        urduTag: 'عظیم محفل دسترخوان',
-        category: 'Family Platters',
-        serves: 'Serves 6',
-        badge: 'Best Value',
-        price: 6950,
-        originalPrice: 8500,
-        description:
-          'Our grand celebratory spread featuring live-grilled kebabs, Peshawari chops, and aromatic pulao.',
-        highlights: [
-          '8-Variety BBQ Assortment & Kabuli Pulao',
-          '6 Assorted Naans, Dal Makhani & Salad Bar',
-          '4 Matka Shahi Kulfi Desserts'
-        ]
-      },
-      {
-        id: 'deal-chapli-pulao',
-        name: 'Peshawari Chapli & Kabuli Combo',
-        urduTag: 'پشاوری چپلی اور کابلی پلاؤ',
-        category: 'Lunch Combos',
-        serves: 'Serves 2',
-        badge: 'Popular',
-        price: 1890,
-        originalPrice: 2290,
-        description:
-          'Crisp pomegranate-seed beef chapli kababs served over caramelized carrot and raisin Kabuli pulao.',
-        highlights: [
-          '2 Jumbo Peshawari Chapli Kababs',
-          'Generous Portion of Kabuli Beef Pulao',
-          'Yogurt Podina Chutney & Pickled Onions'
-        ]
-      },
-      {
-        id: 'deal-mutton-chops',
-        name: 'Midnight Coal-Fired Mutton Chops',
-        urduTag: 'کوئلہ مٹن چانپیں',
-        category: 'Weekend Specials',
-        serves: 'Serves 2–3',
-        badge: 'Fri–Sun Only',
-        price: 3650,
-        originalPrice: 4300,
-        description:
-          'Tender 24-hour raw-papaya and black-pepper marinated lamb chops seared over white oak charcoal.',
-        highlights: [
-          '8 Char-Grilled Peshawari Mutton Chops',
-          '2 Kandahari Naans & Roasted Garlic Dip',
-          'Smoked Masala Fries & Fresh Lime'
-        ]
-      },
-      {
-        id: 'deal-khyber-boti',
-        name: 'Khyber Malai & Reshmi Feast',
-        urduTag: 'خیبر ملائی اور ریشمی کباب',
-        category: 'BBQ & Grill',
-        serves: 'Serves 2–3',
-        badge: 'Mild & Creamy',
-        price: 2850,
-        originalPrice: 3400,
-        description:
-          'Velvety cream-and-cardamom chicken malai boti paired with silky minced chicken reshmi kababs.',
-        highlights: [
-          '12 Pieces Chicken Malai Boti & 4 Reshmi Kababs',
-          '3 Roghni Naans & Pistachio Raita',
-          'Charred Tomato & Onion Skewer'
-        ]
-      },
-      {
-        id: 'deal-sunday-nihari',
-        name: 'Sunday Royal Nihari & Roghni Brunch',
-        urduTag: 'شاہی نہاری اور روغنی نان',
-        category: 'Weekend Specials',
-        serves: 'Serves 2',
-        badge: 'Weekend Brunch',
-        price: 2450,
-        originalPrice: 2950,
-        description:
-          'Slow-simmered 8-hour beef shank nalli nihari finished with ginger juliennes, green chilies, and desi ghee.',
-        highlights: [
-          'Double Bowl Bone-Marrow Nalli Nihari',
-          '3 Crisp Roghni Naans & Lemon Garnish Tray',
-          '2 Sweet Cardamom Lassi Glasses'
-        ]
-      },
-      {
-        id: 'deal-mix-grill-kulfi',
-        name: 'Tandoori Mix Grill & Kulfi Pair',
-        urduTag: 'تندوری مکس گرل اور قلفی',
-        category: 'BBQ & Grill',
+        id: 'deal-smokehouse-burger-trio',
+        name: 'Smokehouse Brisket Burger Trio',
+        category: 'Burgers & Grill',
         serves: 'Serves 3',
-        badge: '16% Off',
-        price: 3150,
-        originalPrice: 3750,
-        description:
-          'A balanced trio of Bihari boti, Lahori fish tikka, and seekh kabab topped off with pistachio kulfi.',
-        highlights: [
-          'Behari Boti, Fish Tikka & 2 Beef Seekh Kababs',
-          '3 Garlic Naans & Tamarind Dip',
-          '2 Pistachio & Zafran Kulfi Sticks'
-        ]
-      }
+        badge: 'Save $13.00',
+        originalPrice: 45.00,
+        price: 32.00,
+        description: 'Three slow-smoked beef brisket smash burgers topped with aged cheddar on toasted brioche.',
+        includes: [
+          '3 Brioche Smoked Brisket Burgers with Aged Cheddar',
+          'Large Basket of Crispy Seasoned Fries & Onion Rings',
+          'Truffle Aioli & Smokey BBQ Dipping Trio',
+        ],
+      },
+      {
+        id: 'deal-truffle-alfredo-pair',
+        name: 'Truffle Mushroom Pasta & Flatbread',
+        category: 'Pasta & Mains',
+        serves: 'Serves 2',
+        badge: 'Save $7.50',
+        originalPrice: 34.00,
+        price: 26.50,
+        description: 'Silky wild mushroom fettuccine alfredo served alongside blistered garlic rosemary flatbread.',
+        includes: [
+          '2 Bowls of Wild Mushroom Truffle Fettuccine',
+          'Roasted Garlic & Parmesan Flatbread',
+          '2 Crisp Romaine Caesar Salads',
+        ],
+      },
+      {
+        id: 'deal-midday-grill-lunch',
+        name: 'Midday Grilled Chicken & Slaw',
+        category: 'Lunch Specials',
+        serves: 'Serves 1',
+        badge: 'Save $4.55',
+        originalPrice: 19.50,
+        price: 14.95,
+        description: 'A wholesome weekday lunch plate with honey-mustard grilled chicken and herb rice.',
+        includes: [
+          'Honey-Mustard Chargrilled Chicken Breast',
+          'Herb Garlic Rice & Charred Corn Coleslaw',
+          'Freshly Brewed Citrus Iced Tea',
+        ],
+      },
+      {
+        id: 'deal-wings-ribs-platter',
+        name: 'Game Night Wings & Ribs Platter',
+        category: 'Burgers & Grill',
+        serves: 'Serves 3–4',
+        badge: 'Save $8.50',
+        originalPrice: 42.00,
+        price: 33.50,
+        description: 'Crispy tossed buffalo wings and smoky barbecue pork ribs built for sharing.',
+        includes: [
+          '18 Crispy Buffalo & Honey-BBQ Wings',
+          'Half-Rack Hickory Smoked Ribs',
+          'Seasoned Potato Wedges & Blue Cheese Dip',
+        ],
+      },
+      {
+        id: 'deal-sunday-roast-table',
+        name: 'Sunday Herb Roast Family Table',
+        category: 'Family Combos',
+        serves: 'Serves 4–5',
+        badge: 'Save $13.10',
+        originalPrice: 58.00,
+        price: 44.90,
+        description: 'Slow-roasted garlic beef sirloin carved thick with creamy gratin and honey-glazed carrots.',
+        includes: [
+          'Slow-Roasted Herb Beef Sirloin (Carved for 4)',
+          'Gruyere Potato Gratin & Honey-Glazed Carrots',
+          'Warm Sourdough Rolls & Peppercorn Jus',
+        ],
+      },
+      {
+        id: 'deal-salmon-lunch-bowl',
+        name: 'Pan-Seared Salmon Lunch Bowl',
+        category: 'Lunch Specials',
+        serves: 'Serves 1',
+        badge: 'Save $5.50',
+        originalPrice: 23.00,
+        price: 17.50,
+        description: 'Crisp-skinned Atlantic salmon glazed in lemon butter over herb rice and greens.',
+        includes: [
+          'Pan-Seared Lemon-Herb Atlantic Salmon',
+          'Herb Garlic Rice & Charred Broccolini',
+          'House Citrus Vinaigrette Side Salad',
+        ],
+      },
+      {
+        id: 'deal-steakhouse-sliders',
+        name: 'Steakhouse Sliders & Mac Feast',
+        category: 'Burgers & Grill',
+        serves: 'Serves 2–3',
+        badge: 'Save $8.50',
+        originalPrice: 38.00,
+        price: 29.50,
+        description: 'Six seared prime beef sliders with caramelized onions paired with baked four-cheese mac.',
+        includes: [
+          '6 Caramelized-Onion Prime Beef Sliders',
+          'Skillet Baked Four-Cheese Mac & Cheese',
+          'Truffle Parmesan Shoestring Fries',
+        ],
+      },
     ];
 
-    var activeCategory = 'All';
-    var searchTerm = '';
+    let activeCategory = 'All';
+    let searchQuery = '';
+
+    // Live ticking countdown timer ("Expires in 02:15:30")
+    if (countdownEl) {
+      let remainingSeconds = 2 * 3600 + 15 * 60 + 30;
+      const formatClock = (totalSec) => {
+        const hrs = Math.floor(totalSec / 3600);
+        const mins = Math.floor((totalSec % 3600) / 60);
+        const secs = totalSec % 60;
+        return [hrs, mins, secs].map((n) => String(n).padStart(2, '0')).join(':');
+      };
+
+      countdownEl.textContent = formatClock(remainingSeconds);
+      window.setInterval(() => {
+        remainingSeconds = remainingSeconds > 0 ? remainingSeconds - 1 : 2 * 3600 + 15 * 60 + 30;
+        countdownEl.textContent = formatClock(remainingSeconds);
+      }, 1000);
+    }
 
     function renderDeals() {
-      var query = searchTerm.trim().toLowerCase();
-      var filtered = DEALS.filter(function (deal) {
-        var matchesCat = activeCategory === 'All' || deal.category === activeCategory;
-        if (!matchesCat) return false;
-        if (!query) return true;
-        var haystack = [
-          deal.name,
-          deal.category,
-          deal.description,
-          deal.serves,
-          deal.highlights.join(' ')
-        ]
-          .join(' ')
-          .toLowerCase();
-        return haystack.indexOf(query) !== -1;
+      const term = searchQuery.trim().toLowerCase();
+      const filtered = DEALS.filter((deal) => {
+        const matchesCategory = activeCategory === 'All' || deal.category === activeCategory;
+        if (!matchesCategory) return false;
+        if (!term) return true;
+        const text = `${deal.name} ${deal.category} ${deal.description} ${deal.includes.join(' ')}`.toLowerCase();
+        return text.includes(term);
       });
 
-      if (countEl) {
-        countEl.textContent =
-          filtered.length + (filtered.length === 1 ? ' offer shown' : ' offers shown');
+      if (countBadge) {
+        countBadge.textContent = `${filtered.length} ${filtered.length === 1 ? 'deal' : 'deals'} available`;
       }
 
       if (filtered.length === 0) {
@@ -229,121 +271,111 @@
 
       emptyStateEl.hidden = true;
       gridEl.innerHTML = filtered
-        .map(function (deal) {
-          var savings = deal.originalPrice - deal.price;
-          return (
-            '<article class="card deal-card" data-deal-id="' +
-            escapeHTML(deal.id) +
-            '">' +
-            '  <div class="deal-card-banner">' +
-            '    <div class="deal-card-banner-top">' +
-            '      <span class="badge badge-solid">' +
-            escapeHTML(deal.badge) +
-            '</span>' +
-            '      <span class="deal-serves">' +
-            escapeHTML(deal.serves) +
-            '</span>' +
-            '    </div>' +
-            '    <div class="deal-card-urdu">' +
-            escapeHTML(deal.urduTag) +
-            '</div>' +
-            '  </div>' +
-            '  <div class="deal-card-body">' +
-            '    <div>' +
-            '      <span class="badge">' +
-            escapeHTML(deal.category) +
-            '</span>' +
-            '    </div>' +
-            '    <h3 class="deal-card-title">' +
-            escapeHTML(deal.name) +
-            '</h3>' +
-            '    <p class="deal-card-desc">' +
-            escapeHTML(deal.description) +
-            '</p>' +
-            '    <ul class="deal-highlights">' +
-            deal.highlights
-              .map(function (item) {
-                return '<li>' + escapeHTML(item) + '</li>';
-              })
-              .join('') +
-            '    </ul>' +
-            '    <div class="deal-card-footer">' +
-            '      <div class="deal-price-wrap">' +
-            '        <span class="deal-price-old">' +
-            api.formatPKR(deal.originalPrice) +
-            '</span>' +
-            '        <span class="deal-price-current">' +
-            api.formatPKR(deal.price) +
-            '</span>' +
-            '        <span class="form-hint">Save ' +
-            api.formatPKR(savings) +
-            '</span>' +
-            '      </div>' +
-            '      <button type="button" class="btn-primary" data-add-deal="' +
-            escapeHTML(deal.id) +
-            '">Add to Cart</button>' +
-            '    </div>' +
-            '  </div>' +
-            '</article>'
-          );
+        .map((deal) => {
+          return `
+            <article class="card" data-deal-id="${escapeHtml(deal.id)}">
+              <div class="deal-card-top">
+                <div class="deal-card-badges">
+                  <span class="badge badge-primary">${escapeHtml(deal.category)}</span>
+                  <span class="badge badge-success">${escapeHtml(deal.badge)}</span>
+                </div>
+                <span class="deal-serves-text">${escapeHtml(deal.serves)}</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">${escapeHtml(deal.name)}</h3>
+                <p class="card-text">${escapeHtml(deal.description)}</p>
+                <ul class="deal-includes">
+                  ${deal.includes.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}
+                </ul>
+              </div>
+              <div class="card-footer">
+                <div class="deal-price-group">
+                  <span class="deal-price-original">${formatUSD(deal.originalPrice)}</span>
+                  <span class="card-price">${formatUSD(deal.price)}</span>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm" data-add-deal="${escapeHtml(deal.id)}">
+                  Add to Cart
+                </button>
+              </div>
+            </article>
+          `;
         })
         .join('');
     }
 
     function setCategory(cat) {
       activeCategory = cat;
-      categoryBtns.forEach(function (btn) {
-        var isMatch = btn.getAttribute('data-category') === cat;
-        btn.classList.toggle('is-active', isMatch);
-        btn.setAttribute('aria-pressed', String(isMatch));
+      categoryBtns.forEach((btn) => {
+        const match = btn.dataset.category === cat;
+        btn.classList.toggle('is-active', match);
+        btn.setAttribute('aria-pressed', String(match));
       });
       renderDeals();
     }
 
     function resetFilters() {
-      activeCategory = 'All';
-      searchTerm = '';
+      searchQuery = '';
       if (searchInput) searchInput.value = '';
       if (clearSearchBtn) clearSearchBtn.hidden = true;
       setCategory('All');
     }
 
-    function showPromoAlert(type, htmlContent) {
+    function showPromoAlert(type, html) {
       if (!promoAlert) return;
-      promoAlert.className = 'alert alert-' + type;
-      promoAlert.innerHTML = htmlContent;
+      promoAlert.className = type ? `alert alert-${type}` : 'alert';
+      promoAlert.innerHTML = html;
       promoAlert.hidden = false;
     }
 
     function renderSavedPromo() {
-      var saved = api.getPromo();
-      if (!saved) {
+      const code = (localStorage.getItem(PROMO_STORAGE_KEY) || '').trim().toUpperCase();
+      const promo = PROMO_CODES[code];
+      if (!promo) {
         if (promoAlert) promoAlert.hidden = true;
         return;
       }
-      if (promoInput) promoInput.value = saved.code;
+      if (promoInput) promoInput.value = promo.code;
       showPromoAlert(
         'success',
-        '<div><strong>Active Code: ' +
-          escapeHTML(saved.code) +
-          '</strong> — ' +
-          escapeHTML(saved.label) +
-          '</div>' +
-          '<button type="button" class="btn-outline btn-sm" id="remove-promo-btn">Remove</button>'
+        `<div class="flex-between">
+          <span><strong>Active Code: ${escapeHtml(promo.code)}</strong> — ${escapeHtml(promo.description)}</span>
+          <button type="button" id="remove-promo-btn" class="btn btn-outline btn-sm">Remove</button>
+        </div>`
       );
     }
 
+    function applyPromoCode(rawCode) {
+      const normalized = String(rawCode || '').trim().toUpperCase();
+      if (!normalized) {
+        showPromoAlert('error', 'Please enter a promo code (try <strong>DINE10</strong>).');
+        return;
+      }
+
+      const promo = PROMO_CODES[normalized];
+      if (!promo) {
+        showPromoAlert(
+          'error',
+          `Promo code <strong>"${escapeHtml(normalized)}"</strong> is not valid. Try <strong>DINE10</strong>, <strong>FEAST5</strong>, or <strong>WELCOME10</strong>.`
+        );
+        return;
+      }
+
+      localStorage.setItem(PROMO_STORAGE_KEY, promo.code);
+      renderSavedPromo();
+      notifyToast(`Promo code ${promo.code} applied!`);
+    }
+
     if (searchInput) {
-      searchInput.addEventListener('input', function () {
-        searchTerm = searchInput.value;
-        if (clearSearchBtn) clearSearchBtn.hidden = searchTerm.length === 0;
+      searchInput.addEventListener('input', () => {
+        searchQuery = searchInput.value;
+        if (clearSearchBtn) clearSearchBtn.hidden = searchQuery.length === 0;
         renderDeals();
       });
     }
 
     if (clearSearchBtn) {
-      clearSearchBtn.addEventListener('click', function () {
-        searchTerm = '';
+      clearSearchBtn.addEventListener('click', () => {
+        searchQuery = '';
         searchInput.value = '';
         clearSearchBtn.hidden = true;
         searchInput.focus();
@@ -351,78 +383,52 @@
       });
     }
 
-    categoryBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        setCategory(btn.getAttribute('data-category'));
-      });
+    categoryBtns.forEach((btn) => {
+      btn.addEventListener('click', () => setCategory(btn.dataset.category));
     });
 
-    if (resetFiltersBtn) {
-      resetFiltersBtn.addEventListener('click', resetFilters);
+    if (resetBtn) {
+      resetBtn.addEventListener('click', resetFilters);
     }
 
-    gridEl.addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-add-deal]');
+    gridEl.addEventListener('click', (event) => {
+      const btn = event.target.closest('[data-add-deal]');
       if (!btn) return;
-      var dealId = btn.getAttribute('data-add-deal');
-      var deal = DEALS.find(function (d) {
-        return d.id === dealId;
-      });
+      const deal = DEALS.find((d) => d.id === btn.dataset.addDeal);
       if (!deal) return;
 
-      api.addToCart({
+      addItemToCart({
         id: deal.id,
         name: deal.name,
         price: deal.price,
         quantity: 1,
-        category: deal.category,
-        meta: deal.serves + ' • ' + deal.category
+        notes: `${deal.serves} • ${deal.category}`,
       });
     });
 
     if (promoForm) {
-      promoForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var result = api.setPromo(promoInput.value);
-        if (!result.valid) {
-          showPromoAlert('error', '<div>' + escapeHTML(result.message) + '</div>');
-          return;
-        }
-        renderSavedPromo();
-        api.showToast(
-          'Promo ' + result.promo.code + ' saved to your order.',
-          'success',
-          'Promo Applied'
-        );
+      promoForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        applyPromoCode(promoInput ? promoInput.value : '');
       });
     }
 
     if (promoAlert) {
-      promoAlert.addEventListener('click', function (e) {
-        if (e.target && e.target.id === 'remove-promo-btn') {
-          api.clearPromo();
+      promoAlert.addEventListener('click', (event) => {
+        if (event.target && event.target.id === 'remove-promo-btn') {
+          localStorage.removeItem(PROMO_STORAGE_KEY);
           if (promoInput) promoInput.value = '';
-          showPromoAlert(
-            'info',
-            '<div>Promo code removed. You can apply another code anytime.</div>'
-          );
+          showPromoAlert('', 'Promo code removed.');
+          notifyToast('Promo code removed.');
         }
       });
     }
 
-    promoChips.forEach(function (chip) {
-      chip.addEventListener('click', function () {
-        var code = chip.getAttribute('data-promo-fill');
+    promoChips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const code = chip.dataset.promoFill;
         if (promoInput) promoInput.value = code;
-        var result = api.setPromo(code);
-        if (result.valid) {
-          renderSavedPromo();
-          api.showToast(
-            'Promo ' + result.promo.code + ' applied.',
-            'success',
-            'Promo Applied'
-          );
-        }
+        applyPromoCode(code);
       });
     });
 
@@ -434,332 +440,187 @@
      2. BUILD YOUR PLATTER PAGE (pages/build-platter.html)
      ======================================================================== */
   function initBuildPlatterPage() {
-    var builderRoot = document.getElementById('platter-builder-root');
-    if (!builderRoot) return;
+    const root = document.getElementById('platter-builder-root');
+    if (!root) return;
 
-    var api = getCartAPI();
-
-    var PLATTER_SIZES = {
-      duo: {
-        id: 'duo',
-        name: 'Duo Charcoal Platter',
-        serves: 'Serves 2',
-        price: 2200,
-        includedBBQ: 2,
-        includedBreads: 2
-      },
-      family: {
-        id: 'family',
-        name: 'Family Dastarkhwan',
-        serves: 'Serves 4',
-        price: 4100,
-        includedBBQ: 4,
-        includedBreads: 4
-      },
-      mehfil: {
-        id: 'mehfil',
-        name: 'Grand Mehfil Platter',
-        serves: 'Serves 6',
-        price: 5900,
-        includedBBQ: 6,
-        includedBreads: 6
-      }
+    const BASES = {
+      'herb-rice': { id: 'herb-rice', name: 'Herb Garlic Rice', price: 12.00, kcal: 380 },
+      'seasoned-fries': { id: 'seasoned-fries', name: 'Crispy Seasoned Fries', price: 11.00, kcal: 420 },
+      'garlic-sourdough': { id: 'garlic-sourdough', name: 'Artisan Garlic Sourdough', price: 13.00, kcal: 350 },
     };
 
-    var BBQ_ITEMS = {
-      'malai-boti': { name: 'Chicken Malai Boti', extraPrice: 650 },
-      'seekh-kabab': { name: 'Beef Seekh Kabab', extraPrice: 550 },
-      'mutton-chops': { name: 'Peshawari Mutton Chops', extraPrice: 950 },
-      'reshmi-kabab': { name: 'Chicken Reshmi Kabab', extraPrice: 600 },
-      'lahori-chargha': { name: 'Lahori Chargha Quarter', extraPrice: 700 },
-      'chapli-kabab': { name: 'Peshawari Chapli Kabab', extraPrice: 580 },
-      'behari-boti': { name: 'Beef Behari Boti', extraPrice: 690 },
-      'fish-tikka': { name: 'Grilled Pomfret Fish Tikka', extraPrice: 880 }
+    const MAINS = {
+      'ribeye-strips': { id: 'ribeye-strips', name: 'Herb-Crusted Ribeye Strips', price: 12.50, kcal: 390 },
+      'buffalo-wings': { id: 'buffalo-wings', name: 'Crispy Buffalo Wings', price: 9.50, kcal: 340 },
+      'grilled-chicken': { id: 'grilled-chicken', name: 'Honey Mustard Grilled Chicken', price: 10.00, kcal: 290 },
+      'garlic-shrimp': { id: 'garlic-shrimp', name: 'Garlic Butter Shrimp Skewers', price: 11.50, kcal: 250 },
+      'pulled-beef': { id: 'pulled-beef', name: 'Smoky BBQ Pulled Beef', price: 10.50, kcal: 360 },
+      'portobello-halloumi': { id: 'portobello-halloumi', name: 'Roasted Portobello & Halloumi', price: 9.00, kcal: 260 },
     };
 
-    var BREAD_ITEMS = {
-      'roghni-naan': { name: 'Roghni Naan', price: 0 },
-      'tandoori-roti': { name: 'Tandoori Khamiri Roti', price: 0 },
-      'garlic-naan': { name: 'Garlic Butter Naan', price: 180 },
-      'kalonji-cheese': { name: 'Kalonji Cheese Naan', price: 280 },
-      'peshawari-naan': { name: 'Peshawari Dry-Fruit Naan', price: 320 }
+    const SIDES = {
+      'mac-cheese': { id: 'mac-cheese', name: 'Creamy Mac & Cheese', price: 4.50, kcal: 410 },
+      'caesar-salad': { id: 'caesar-salad', name: 'Classic Caesar Salad', price: 3.50, kcal: 180 },
+      'corn-coleslaw': { id: 'corn-coleslaw', name: 'Charred Corn & Coleslaw', price: 3.00, kcal: 160 },
+      'sauce-trio': { id: 'sauce-trio', name: 'Truffle Aioli & Smokey BBQ Trio', price: 2.00, kcal: 140 },
     };
 
-    var SIDE_ITEMS = {
-      'mint-raita': { name: 'Mint & Coriander Raita', price: 0 },
-      'imli-chutney': { name: 'Imli & Khajoor Chutney', price: 0 },
-      'kachumber-salad': { name: 'Kachumber & Pickled Onion', price: 180 },
-      'kabuli-pulao': { name: 'Kabuli Pulao Sharing Bowl', price: 750 },
-      'dal-makhani': { name: 'Smoked Dal Makhani', price: 680 },
-      'shahi-kulfi': { name: 'Matka Shahi Kulfi Duo', price: 520 }
-    };
-
-    var step1El = document.getElementById('step-platter-size');
-    var step2El = document.getElementById('step-bbq-items');
-    var step3El = document.getElementById('step-breads');
-    var bbqCounterBadge = document.getElementById('bbq-counter-badge');
-    var summaryLinesEl = document.getElementById('platter-summary-lines');
-    var summaryTotalEl = document.getElementById('platter-total');
-    var summaryAlertEl = document.getElementById('platter-alert');
-    var addBtn = document.getElementById('add-platter-btn');
-    var resetBtn = document.getElementById('reset-platter-btn');
-    var notesInput = document.getElementById('platter-spice-notes');
+    const stepBaseEl = document.getElementById('step-base');
+    const stepMainsEl = document.getElementById('step-mains');
+    const summaryListEl = document.getElementById('platter-summary-list');
+    const caloriesEl = document.getElementById('platter-calories');
+    const totalEl = document.getElementById('platter-total');
+    const alertEl = document.getElementById('platter-alert');
+    const notesInput = document.getElementById('platter-notes');
+    const addBtn = document.getElementById('add-platter-btn');
+    const resetBtn = document.getElementById('reset-platter-btn');
 
     function getState() {
-      var sizeRadio = builderRoot.querySelector('input[name="platterSize"]:checked');
-      var size = sizeRadio ? PLATTER_SIZES[sizeRadio.value] : null;
+      const baseRadio = root.querySelector('input[name="platterBase"]:checked');
+      const base = baseRadio ? BASES[baseRadio.value] : null;
 
-      var bbqKeys = Array.prototype.map.call(
-        builderRoot.querySelectorAll('input[name="bbqItem"]:checked'),
-        function (el) {
-          return el.value;
-        }
-      );
+      const mains = Array.from(root.querySelectorAll('input[name="platterMain"]:checked'))
+        .map((el) => MAINS[el.value])
+        .filter(Boolean);
 
-      var breadKeys = Array.prototype.map.call(
-        builderRoot.querySelectorAll('input[name="breadItem"]:checked'),
-        function (el) {
-          return el.value;
-        }
-      );
+      const sides = Array.from(root.querySelectorAll('input[name="platterSide"]:checked'))
+        .map((el) => SIDES[el.value])
+        .filter(Boolean);
 
-      var sideKeys = Array.prototype.map.call(
-        builderRoot.querySelectorAll('input[name="sideItem"]:checked'),
-        function (el) {
-          return el.value;
-        }
-      );
+      const spiceRadio = root.querySelector('input[name="spiceLevel"]:checked');
+      const spice = spiceRadio ? spiceRadio.value : 'Medium';
+      const notes = notesInput ? notesInput.value.trim() : '';
 
-      var spiceRadio = builderRoot.querySelector('input[name="spiceLevel"]:checked');
-      var spiceLevel = spiceRadio ? spiceRadio.value : 'Classic Lahori Medium';
-      var notes = notesInput ? notesInput.value.trim() : '';
-
-      return {
-        size: size,
-        bbqKeys: bbqKeys,
-        breadKeys: breadKeys,
-        sideKeys: sideKeys,
-        spiceLevel: spiceLevel,
-        notes: notes
-      };
+      return { base, mains, sides, spice, notes };
     }
 
-    function syncOptionCardClasses() {
-      builderRoot.querySelectorAll('.option-card').forEach(function (card) {
-        var input = card.querySelector('input');
-        if (input) {
-          card.classList.toggle('is-selected', input.checked);
-        }
+    function syncOptionCards() {
+      root.querySelectorAll('.option-card').forEach((card) => {
+        const input = card.querySelector('input');
+        if (input) card.classList.toggle('is-selected', input.checked);
       });
     }
 
-    function calculatePricing(state) {
-      var basePrice = state.size ? state.size.price : 0;
-      var includedAllowance = state.size ? state.size.includedBBQ : 0;
+    function computeTotals(state) {
+      let price = state.base ? state.base.price : 0;
+      let kcal = state.base ? state.base.kcal : 0;
 
-      var bbqExtraTotal = 0;
-      var bbqBreakdown = state.bbqKeys.map(function (key, index) {
-        var item = BBQ_ITEMS[key];
-        var isIncluded = state.size && index < includedAllowance;
-        var charge = isIncluded ? 0 : item.extraPrice;
-        bbqExtraTotal += charge;
-        return {
-          name: item.name,
-          isIncluded: isIncluded,
-          charge: charge
-        };
+      state.mains.forEach((m) => {
+        price += m.price;
+        kcal += m.kcal;
       });
 
-      var breadTotal = 0;
-      var breadBreakdown = state.breadKeys.map(function (key) {
-        var item = BREAD_ITEMS[key];
-        breadTotal += item.price;
-        return item;
+      state.sides.forEach((s) => {
+        price += s.price;
+        kcal += s.kcal;
       });
 
-      var sideTotal = 0;
-      var sideBreakdown = state.sideKeys.map(function (key) {
-        var item = SIDE_ITEMS[key];
-        sideTotal += item.price;
-        return item;
-      });
-
-      var total = basePrice + bbqExtraTotal + breadTotal + sideTotal;
-      return {
-        basePrice: basePrice,
-        includedAllowance: includedAllowance,
-        bbqBreakdown: bbqBreakdown,
-        bbqExtraTotal: bbqExtraTotal,
-        breadBreakdown: breadBreakdown,
-        breadTotal: breadTotal,
-        sideBreakdown: sideBreakdown,
-        sideTotal: sideTotal,
-        total: total
-      };
+      return { price, kcal };
     }
 
     function renderSummary() {
-      syncOptionCardClasses();
-      var state = getState();
-      var pricing = calculatePricing(state);
+      syncOptionCards();
+      const state = getState();
+      const totals = computeTotals(state);
+      const rows = [];
 
-      if (bbqCounterBadge) {
-        var allowanceText = state.size
-          ? state.bbqKeys.length + ' / ' + state.size.includedBBQ + ' included'
-          : state.bbqKeys.length + ' selected';
-        bbqCounterBadge.textContent = allowanceText;
-      }
-
-      var lines = [];
-
-      if (state.size) {
-        lines.push(
-          '<div class="summary-line">' +
-            '<span><strong>' +
-            escapeHTML(state.size.name) +
-            '</strong> (' +
-            escapeHTML(state.size.serves) +
-            ')</span>' +
-            '<strong>' +
-            api.formatPKR(pricing.basePrice) +
-            '</strong>' +
-            '</div>'
+      if (state.base) {
+        rows.push(
+          `<div class="summary-item-line">
+            <span><strong>${escapeHtml(state.base.name)}</strong></span>
+            <span>${formatUSD(state.base.price)}</span>
+          </div>`
         );
       } else {
-        lines.push(
-          '<div class="summary-line summary-line-muted">' +
-            '<span>1. Platter Size</span>' +
-            '<span>Not selected</span>' +
-            '</div>'
+        rows.push(
+          `<div class="summary-item-line summary-item-muted">
+            <span>1. Platter Base (required)</span>
+            <span>Not selected</span>
+          </div>`
         );
       }
 
-      if (pricing.bbqBreakdown.length > 0) {
-        pricing.bbqBreakdown.forEach(function (bbq) {
-          lines.push(
-            '<div class="summary-line">' +
-              '<span>• ' +
-              escapeHTML(bbq.name) +
-              '</span>' +
-              '<span>' +
-              (bbq.charge === 0 ? 'Included' : '+' + api.formatPKR(bbq.charge)) +
-              '</span>' +
-              '</div>'
+      if (state.mains.length > 0) {
+        state.mains.forEach((m) => {
+          rows.push(
+            `<div class="summary-item-line">
+              <span>• ${escapeHtml(m.name)}</span>
+              <span>${formatUSD(m.price)}</span>
+            </div>`
           );
         });
       } else {
-        lines.push(
-          '<div class="summary-line summary-line-muted">' +
-            '<span>2. BBQ Skewers (min 2)</span>' +
-            '<span>Select items</span>' +
-            '</div>'
+        rows.push(
+          `<div class="summary-item-line summary-item-muted">
+            <span>2. Main Items (select at least 1)</span>
+            <span>None chosen</span>
+          </div>`
         );
       }
 
-      if (pricing.breadBreakdown.length > 0) {
-        pricing.breadBreakdown.forEach(function (bread) {
-          lines.push(
-            '<div class="summary-line">' +
-              '<span>• ' +
-              escapeHTML(bread.name) +
-              '</span>' +
-              '<span>' +
-              (bread.price === 0 ? 'Included' : '+' + api.formatPKR(bread.price)) +
-              '</span>' +
-              '</div>'
-          );
-        });
-      } else {
-        lines.push(
-          '<div class="summary-line summary-line-muted">' +
-            '<span>3. Tandoori Breads (min 1)</span>' +
-            '<span>Select bread</span>' +
-            '</div>'
-        );
-      }
-
-      pricing.sideBreakdown.forEach(function (side) {
-        lines.push(
-          '<div class="summary-line">' +
-            '<span>• ' +
-            escapeHTML(side.name) +
-            '</span>' +
-            '<span>' +
-            (side.price === 0 ? 'Complimentary' : '+' + api.formatPKR(side.price)) +
-            '</span>' +
-            '</div>'
+      state.sides.forEach((s) => {
+        rows.push(
+          `<div class="summary-item-line">
+            <span>• ${escapeHtml(s.name)}</span>
+            <span>${formatUSD(s.price)}</span>
+          </div>`
         );
       });
 
-      lines.push(
-        '<div class="summary-line summary-line-muted">' +
-          '<span>Spice Level</span>' +
-          '<span>' +
-          escapeHTML(state.spiceLevel) +
-          '</span>' +
-          '</div>'
+      rows.push(
+        `<div class="summary-item-line summary-item-muted">
+          <span>Spice Level</span>
+          <span>${escapeHtml(state.spice)}</span>
+        </div>`
       );
 
       if (state.notes) {
-        lines.push(
-          '<div class="summary-line summary-line-muted">' +
-            '<span>Chef Note</span>' +
-            '<span>' +
-            escapeHTML(state.notes) +
-            '</span>' +
-            '</div>'
+        rows.push(
+          `<div class="summary-item-line summary-item-muted">
+            <span>Kitchen Note</span>
+            <span>${escapeHtml(state.notes)}</span>
+          </div>`
         );
       }
 
-      summaryLinesEl.innerHTML = lines.join('');
-      summaryTotalEl.textContent = api.formatPKR(pricing.total);
+      summaryListEl.innerHTML = rows.join('');
+      caloriesEl.textContent = `${totals.kcal.toLocaleString('en-US')} kcal`;
+      totalEl.textContent = formatUSD(totals.price);
     }
 
-    function clearValidationHighlights() {
-      [step1El, step2El, step3El].forEach(function (el) {
+    function clearErrors() {
+      [stepBaseEl, stepMainsEl].forEach((el) => {
         if (el) el.classList.remove('has-error');
       });
     }
 
     function validatePlatter(state) {
-      clearValidationHighlights();
-      var errors = [];
-      var firstErrorEl = null;
+      clearErrors();
+      const errors = [];
+      let firstInvalid = null;
 
-      if (!state.size) {
-        errors.push('Select a platter size in Step 1.');
-        if (step1El) {
-          step1El.classList.add('has-error');
-          firstErrorEl = firstErrorEl || step1El;
+      if (!state.base) {
+        errors.push('Select a platter base in Step 1.');
+        if (stepBaseEl) {
+          stepBaseEl.classList.add('has-error');
+          firstInvalid = firstInvalid || stepBaseEl;
         }
       }
 
-      if (state.bbqKeys.length < 2) {
-        errors.push('Choose at least 2 BBQ items in Step 2.');
-        if (step2El) {
-          step2El.classList.add('has-error');
-          firstErrorEl = firstErrorEl || step2El;
+      if (state.mains.length < 1) {
+        errors.push('Select at least 1 main grill item in Step 2.');
+        if (stepMainsEl) {
+          stepMainsEl.classList.add('has-error');
+          firstInvalid = firstInvalid || stepMainsEl;
         }
       }
 
-      if (state.breadKeys.length < 1) {
-        errors.push('Select at least 1 tandoori bread option in Step 3.');
-        if (step3El) {
-          step3El.classList.add('has-error');
-          firstErrorEl = firstErrorEl || step3El;
-        }
-      }
-
-      return {
-        valid: errors.length === 0,
-        errors: errors,
-        firstErrorEl: firstErrorEl
-      };
+      return { valid: errors.length === 0, errors, firstInvalid };
     }
 
-    builderRoot.addEventListener('change', function () {
-      clearValidationHighlights();
-      if (summaryAlertEl) summaryAlertEl.hidden = true;
+    root.addEventListener('change', () => {
+      clearErrors();
+      if (alertEl) alertEl.hidden = true;
       renderSummary();
     });
 
@@ -768,81 +629,63 @@
     }
 
     if (addBtn) {
-      addBtn.addEventListener('click', function () {
-        var state = getState();
-        var check = validatePlatter(state);
+      addBtn.addEventListener('click', () => {
+        const state = getState();
+        const check = validatePlatter(state);
 
         if (!check.valid) {
-          summaryAlertEl.className = 'alert alert-error';
-          summaryAlertEl.innerHTML =
-            '<div><strong>Complete required steps:</strong><ul style="margin:0.35rem 0 0 1.1rem;padding:0;">' +
-            check.errors
-              .map(function (err) {
-                return '<li>' + escapeHTML(err) + '</li>';
-              })
-              .join('') +
-            '</ul></div>';
-          summaryAlertEl.hidden = false;
-          if (check.firstErrorEl) {
-            check.firstErrorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          alertEl.className = 'alert alert-error';
+          alertEl.innerHTML = check.errors.map((err) => `<div>${escapeHtml(err)}</div>`).join('');
+          alertEl.hidden = false;
+          if (check.firstInvalid) {
+            check.firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
-          api.showToast(check.errors[0], 'error', 'Incomplete Platter');
+          notifyToast(check.errors[0]);
           return;
         }
 
-        var pricing = calculatePricing(state);
-        var bbqNames = pricing.bbqBreakdown.map(function (b) {
-          return b.name;
-        });
-        var breadNames = pricing.breadBreakdown.map(function (b) {
-          return b.name;
-        });
-        var metaSummary =
-          state.size.serves +
-          ' | BBQ: ' +
-          bbqNames.join(', ') +
-          ' | Breads: ' +
-          breadNames.join(', ') +
-          ' | Spice: ' +
-          state.spiceLevel +
-          (state.notes ? ' | Note: ' + state.notes : '');
+        const totals = computeTotals(state);
+        const signature = [
+          state.base.id,
+          state.mains.map((m) => m.id).join('+'),
+          state.sides.map((s) => s.id).join('+'),
+          state.spice,
+        ].join('-');
 
-        api.addToCart({
-          id: 'custom-platter-' + state.size.id,
-          name: 'Custom ' + state.size.name,
-          price: pricing.total,
+        const noteParts = [
+          `Mains: ${state.mains.map((m) => m.name).join(', ')}`,
+          state.sides.length ? `Sides: ${state.sides.map((s) => s.name).join(', ')}` : '',
+          `Spice: ${state.spice}`,
+          `${totals.kcal.toLocaleString('en-US')} kcal`,
+          state.notes ? `Note: ${state.notes}` : '',
+        ].filter(Boolean);
+
+        addItemToCart({
+          id: `custom-platter-${signature}`,
+          name: `Custom Platter (${state.base.name})`,
+          price: totals.price,
           quantity: 1,
-          category: 'Custom BBQ Platter',
-          meta: metaSummary
+          notes: noteParts.join(' | '),
         });
 
-        summaryAlertEl.className = 'alert alert-success';
-        summaryAlertEl.innerHTML =
-          '<div><strong>Platter added!</strong> Your custom ' +
-          escapeHTML(state.size.name) +
-          ' (' +
-          api.formatPKR(pricing.total) +
-          ') is in your DineIn cart.</div>';
-        summaryAlertEl.hidden = false;
+        alertEl.className = 'alert alert-success';
+        alertEl.innerHTML = `<strong>Added to Cart!</strong> Custom Platter (${formatUSD(totals.price)} &bull; ${totals.kcal.toLocaleString('en-US')} kcal) is ready in your cart.`;
+        alertEl.hidden = false;
       });
     }
 
     if (resetBtn) {
-      resetBtn.addEventListener('click', function () {
-        builderRoot.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
-          cb.checked = cb.value === 'mint-raita' || cb.value === 'imli-chutney';
+      resetBtn.addEventListener('click', () => {
+        const defaultBase = root.querySelector('input[name="platterBase"][value="herb-rice"]');
+        if (defaultBase) defaultBase.checked = true;
+        root.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
+          cb.checked = false;
         });
-        var defaultSize = builderRoot.querySelector(
-          'input[name="platterSize"][value="family"]'
-        );
-        if (defaultSize) defaultSize.checked = true;
-        var defaultSpice = builderRoot.querySelector(
-          'input[name="spiceLevel"][value="Classic Lahori Medium"]'
-        );
+        const defaultSpice = root.querySelector('input[name="spiceLevel"][value="Medium"]');
         if (defaultSpice) defaultSpice.checked = true;
         if (notesInput) notesInput.value = '';
-        clearValidationHighlights();
-        if (summaryAlertEl) summaryAlertEl.hidden = true;
+        clearErrors();
+        if (alertEl) alertEl.hidden = true;
         renderSummary();
       });
     }
@@ -854,241 +697,209 @@
      3. GIFT VOUCHERS PAGE (pages/gift-vouchers.html)
      ======================================================================== */
   function initGiftVouchersPage() {
-    var form = document.getElementById('voucher-form');
+    const form = document.getElementById('voucher-form');
     if (!form) return;
 
-    var api = getCartAPI();
+    const cardTypeBtns = document.querySelectorAll('[data-card-type]');
+    const amountBtns = document.querySelectorAll('[data-voucher-amount]');
+    const customAmountWrap = document.getElementById('custom-amount-wrap');
+    const customAmountInput = document.getElementById('voucher-custom-amount');
+    const occasionBtns = document.querySelectorAll('[data-voucher-occasion]');
 
-    var amountBtns = document.querySelectorAll('[data-voucher-amount]');
-    var customAmountWrap = document.getElementById('custom-amount-wrap');
-    var customAmountInput = document.getElementById('voucher-custom-amount');
-    var themeBtns = document.querySelectorAll('[data-voucher-theme]');
-    var deliveryRadios = form.querySelectorAll('input[name="deliveryFormat"]');
+    const recipientNameInput = document.getElementById('recipient-name');
+    const recipientEmailInput = document.getElementById('recipient-email');
+    const senderNameInput = document.getElementById('sender-name');
+    const deliveryDateInput = document.getElementById('delivery-date');
+    const messageInput = document.getElementById('voucher-message');
+    const charCounter = document.getElementById('message-char-count');
 
-    var recipientNameInput = document.getElementById('recipient-name');
-    var recipientContactInput = document.getElementById('recipient-contact');
-    var senderNameInput = document.getElementById('sender-name');
-    var deliveryDateInput = document.getElementById('delivery-date');
-    var messageInput = document.getElementById('voucher-message');
-    var charCountEl = document.getElementById('message-char-count');
+    const previewTypeEl = document.getElementById('preview-card-type');
+    const previewOccasionEl = document.getElementById('preview-occasion');
+    const previewAmountEl = document.getElementById('preview-amount');
+    const previewMessageEl = document.getElementById('preview-message');
+    const previewRecipientEl = document.getElementById('preview-recipient');
+    const previewSenderEl = document.getElementById('preview-sender');
+    const previewDateEl = document.getElementById('preview-date');
+    const previewCodeEl = document.getElementById('preview-code');
 
-    var previewOccasionEl = document.getElementById('preview-occasion');
-    var previewAmountEl = document.getElementById('preview-amount');
-    var previewMessageEl = document.getElementById('preview-message');
-    var previewRecipientEl = document.getElementById('preview-recipient');
-    var previewSenderEl = document.getElementById('preview-sender');
-    var previewFormatEl = document.getElementById('preview-format');
-    var previewCodeEl = document.getElementById('preview-code');
+    const summaryTypeEl = document.getElementById('summary-card-type');
+    const summaryFeeEl = document.getElementById('summary-delivery-fee');
+    const summaryValueEl = document.getElementById('summary-voucher-value');
+    const summaryTotalEl = document.getElementById('summary-voucher-total');
+    const voucherAlert = document.getElementById('voucher-alert');
 
-    var summaryValueEl = document.getElementById('summary-voucher-value');
-    var summaryFeeEl = document.getElementById('summary-packaging-fee');
-    var summaryFormatEl = document.getElementById('summary-format-label');
-    var summaryTotalEl = document.getElementById('summary-voucher-total');
-    var voucherAlertEl = document.getElementById('voucher-alert');
+    let cardType = 'egift'; // 'egift' ($0) or 'physical' ($5)
+    let presetAmount = 50;
+    let isCustomAmount = false;
+    let selectedOccasion = 'Birthday';
 
-    var selectedPreset = 5000;
-    var isCustomAmount = false;
-    var selectedTheme = 'Eid Mubarak';
+    // Default delivery date to today
+    const today = new Date();
+    const todayStr = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, '0'),
+      String(today.getDate()).padStart(2, '0'),
+    ].join('-');
 
-    if (deliveryDateInput && !deliveryDateInput.value) {
-      var today = new Date();
-      var yyyy = today.getFullYear();
-      var mm = String(today.getMonth() + 1).padStart(2, '0');
-      var dd = String(today.getDate()).padStart(2, '0');
-      deliveryDateInput.min = yyyy + '-' + mm + '-' + dd;
-      deliveryDateInput.value = yyyy + '-' + mm + '-' + dd;
+    if (deliveryDateInput) {
+      deliveryDateInput.min = todayStr;
+      if (!deliveryDateInput.value) deliveryDateInput.value = todayStr;
     }
 
     function getActiveAmount() {
-      if (!isCustomAmount) return selectedPreset;
-      var parsed = parseInt(customAmountInput ? customAmountInput.value : '0', 10);
-      return isNaN(parsed) ? 0 : parsed;
+      if (!isCustomAmount) return presetAmount;
+      const val = Number(customAmountInput ? customAmountInput.value : 0);
+      return Number.isNaN(val) ? 0 : Math.round(val * 100) / 100;
     }
 
-    function getDeliveryFormat() {
-      var checked = form.querySelector('input[name="deliveryFormat"]:checked');
-      if (checked && checked.value === 'printed') {
+    function getCardTypeInfo() {
+      if (cardType === 'physical') {
         return {
-          key: 'printed',
-          label: 'Gold-Foil Keepsake Box',
-          fee: 350
+          key: 'physical',
+          badge: 'Physical Card',
+          summaryLabel: 'Physical Cards (Embossed Sleeve)',
+          fee: 5.0,
         };
       }
       return {
-        key: 'digital',
-        label: 'Digital E-Voucher (Instant)',
-        fee: 0
+        key: 'egift',
+        badge: 'e-Gift Card',
+        summaryLabel: 'e-Gift Cards (Instant Email)',
+        fee: 0.0,
       };
     }
 
-    function buildPreviewCode(amount, recipient) {
-      var clean = (recipient || 'DINE').replace(/[^a-zA-Z]/g, '').toUpperCase();
-      var prefix = (clean.slice(0, 4) || 'DINE').padEnd(4, 'X');
-      var amtTag = Math.max(10, Math.round((amount || 5000) / 100));
-      return 'DINE-' + prefix + '-' + amtTag;
+    function buildVoucherCode(recipient, amount) {
+      const letters = (recipient || 'DINE').replace(/[^a-zA-Z]/g, '').toUpperCase();
+      const prefix = (letters.slice(0, 4) || 'DINE').padEnd(4, 'X');
+      const amtNum = Math.max(10, Math.round(amount || 50));
+      return `DINE-${prefix}-${amtNum}`;
     }
 
     function updatePreviewAndSummary() {
-      var amount = getActiveAmount();
-      var format = getDeliveryFormat();
-      var total = (amount > 0 ? amount : 0) + format.fee;
+      const amount = getActiveAmount();
+      const typeInfo = getCardTypeInfo();
+      const total = (amount > 0 ? amount : 0) + typeInfo.fee;
 
-      var recipient = recipientNameInput ? recipientNameInput.value.trim() : '';
-      var sender = senderNameInput ? senderNameInput.value.trim() : '';
-      var message = messageInput ? messageInput.value.trim() : '';
+      const recipient = recipientNameInput ? recipientNameInput.value.trim() : '';
+      const sender = senderNameInput ? senderNameInput.value.trim() : '';
+      const message = messageInput ? messageInput.value.trim() : '';
+      const dateVal = deliveryDateInput ? deliveryDateInput.value : todayStr;
 
-      if (charCountEl && messageInput) {
-        charCountEl.textContent = messageInput.value.length + ' / 160 characters';
+      if (charCounter && messageInput) {
+        charCounter.textContent = `${messageInput.value.length} / 160 characters`;
       }
 
-      if (previewOccasionEl) previewOccasionEl.textContent = selectedTheme;
-      if (previewAmountEl) {
-        previewAmountEl.textContent =
-          amount > 0 ? api.formatPKR(amount) : 'PKR —';
-      }
+      if (previewTypeEl) previewTypeEl.textContent = typeInfo.badge;
+      if (previewOccasionEl) previewOccasionEl.textContent = selectedOccasion;
+      if (previewAmountEl) previewAmountEl.textContent = amount > 0 ? formatUSD(amount) : '$0.00';
       if (previewMessageEl) {
         previewMessageEl.textContent = message
-          ? '"' + message + '"'
-          : '"Wishing you an unforgettable evening of charcoal-grilled flavours and warm hospitality."';
+          ? `"${message}"`
+          : '"Enjoy an unforgettable dining experience filled with warm flavors and great company."';
       }
-      if (previewRecipientEl) {
-        previewRecipientEl.textContent = recipient || 'Honoured Guest';
-      }
-      if (previewSenderEl) {
-        previewSenderEl.textContent = sender || 'Your Name';
-      }
-      if (previewFormatEl) {
-        previewFormatEl.textContent = format.label;
-      }
-      if (previewCodeEl) {
-        previewCodeEl.textContent = buildPreviewCode(amount, recipient);
-      }
+      if (previewRecipientEl) previewRecipientEl.textContent = recipient || 'Valued Guest';
+      if (previewSenderEl) previewSenderEl.textContent = sender || 'Your Name';
+      if (previewDateEl) previewDateEl.textContent = dateVal || todayStr;
+      if (previewCodeEl) previewCodeEl.textContent = buildVoucherCode(recipient, amount);
 
-      if (summaryValueEl) {
-        summaryValueEl.textContent = amount > 0 ? api.formatPKR(amount) : 'PKR 0';
-      }
-      if (summaryFormatEl) summaryFormatEl.textContent = format.label;
-      if (summaryFeeEl) summaryFeeEl.textContent = api.formatPKR(format.fee);
-      if (summaryTotalEl) summaryTotalEl.textContent = api.formatPKR(total);
-
-      form.querySelectorAll('.option-card').forEach(function (card) {
-        var input = card.querySelector('input');
-        if (input) card.classList.toggle('is-selected', input.checked);
-      });
+      if (summaryTypeEl) summaryTypeEl.textContent = typeInfo.summaryLabel;
+      if (summaryValueEl) summaryValueEl.textContent = amount > 0 ? formatUSD(amount) : '$0.00';
+      if (summaryFeeEl) summaryFeeEl.textContent = formatUSD(typeInfo.fee);
+      if (summaryTotalEl) summaryTotalEl.textContent = formatUSD(total);
     }
 
-    function setFieldError(inputEl, errorId, msg) {
-      var errEl = document.getElementById(errorId);
-      if (inputEl) {
-        inputEl.classList.toggle('is-invalid', Boolean(msg));
-      }
-      if (errEl) {
-        errEl.textContent = msg || '';
-      }
-    }
-
-    function isValidContact(val) {
-      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      var pkPhoneRegex = /^(\+92|0)?3\d{2}[-\s]?\d{7}$/;
-      return emailRegex.test(val) || pkPhoneRegex.test(val);
+    function setError(input, errorId, message) {
+      const errEl = document.getElementById(errorId);
+      if (input) input.classList.toggle('is-invalid', Boolean(message));
+      if (errEl) errEl.textContent = message || '';
     }
 
     function validateVoucherForm() {
-      var valid = true;
-      var amount = getActiveAmount();
+      let valid = true;
+      const amount = getActiveAmount();
 
       if (isCustomAmount) {
-        if (!amount || amount < 1000 || amount > 100000) {
-          setFieldError(
-            customAmountInput,
-            'error-custom-amount',
-            'Enter a custom amount between PKR 1,000 and PKR 100,000.'
-          );
+        if (!amount || amount < 10 || amount > 1000) {
+          setError(customAmountInput, 'error-custom-amount', 'Enter a custom amount between $10.00 and $1,000.00.');
           valid = false;
         } else {
-          setFieldError(customAmountInput, 'error-custom-amount', '');
+          setError(customAmountInput, 'error-custom-amount', '');
         }
       } else {
-        setFieldError(customAmountInput, 'error-custom-amount', '');
+        setError(customAmountInput, 'error-custom-amount', '');
       }
 
-      var recipient = recipientNameInput.value.trim();
+      const recipient = recipientNameInput.value.trim();
       if (recipient.length < 2) {
-        setFieldError(
-          recipientNameInput,
-          'error-recipient-name',
-          'Please enter the recipient’s full name (at least 2 characters).'
-        );
+        setError(recipientNameInput, 'error-recipient-name', 'Please enter the recipient’s name.');
         valid = false;
       } else {
-        setFieldError(recipientNameInput, 'error-recipient-name', '');
+        setError(recipientNameInput, 'error-recipient-name', '');
       }
 
-      var contact = recipientContactInput.value.trim();
-      if (!isValidContact(contact)) {
-        setFieldError(
-          recipientContactInput,
-          'error-recipient-contact',
-          'Enter a valid email or Pakistani mobile number (e.g. 0300-1234567).'
-        );
+      const email = recipientEmailInput.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setError(recipientEmailInput, 'error-recipient-email', 'Please enter a valid recipient email address.');
         valid = false;
       } else {
-        setFieldError(recipientContactInput, 'error-recipient-contact', '');
+        setError(recipientEmailInput, 'error-recipient-email', '');
       }
 
-      var sender = senderNameInput.value.trim();
+      const sender = senderNameInput.value.trim();
       if (sender.length < 2) {
-        setFieldError(
-          senderNameInput,
-          'error-sender-name',
-          'Please enter your name so the recipient knows who sent it.'
-        );
+        setError(senderNameInput, 'error-sender-name', 'Please enter your name.');
         valid = false;
       } else {
-        setFieldError(senderNameInput, 'error-sender-name', '');
+        setError(senderNameInput, 'error-sender-name', '');
       }
 
-      var dateVal = deliveryDateInput.value;
-      if (!dateVal) {
-        setFieldError(
-          deliveryDateInput,
-          'error-delivery-date',
-          'Choose a delivery date.'
-        );
+      const dateVal = deliveryDateInput.value;
+      if (!dateVal || dateVal < todayStr) {
+        setError(deliveryDateInput, 'error-delivery-date', 'Choose today or a future delivery date.');
         valid = false;
       } else {
-        setFieldError(deliveryDateInput, 'error-delivery-date', '');
+        setError(deliveryDateInput, 'error-delivery-date', '');
       }
 
       return valid;
     }
 
-    amountBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var val = btn.getAttribute('data-voucher-amount');
-        amountBtns.forEach(function (b) {
-          b.classList.toggle('is-active', b === btn);
+    cardTypeBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        cardType = btn.dataset.cardType;
+        cardTypeBtns.forEach((b) => {
+          const active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-pressed', String(active));
         });
+        updatePreviewAndSummary();
+      });
+    });
 
+    amountBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const val = btn.dataset.voucherAmount;
+        amountBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
         if (val === 'custom') {
           isCustomAmount = true;
           if (customAmountWrap) customAmountWrap.hidden = false;
           if (customAmountInput) customAmountInput.focus();
         } else {
           isCustomAmount = false;
-          selectedPreset = parseInt(val, 10);
+          presetAmount = Number(val);
           if (customAmountWrap) customAmountWrap.hidden = true;
-          setFieldError(customAmountInput, 'error-custom-amount', '');
+          setError(customAmountInput, 'error-custom-amount', '');
         }
         updatePreviewAndSummary();
       });
     });
 
-    themeBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        selectedTheme = btn.getAttribute('data-voucher-theme');
-        themeBtns.forEach(function (b) {
-          var active = b === btn;
+    occasionBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        selectedOccasion = btn.dataset.voucherOccasion;
+        occasionBtns.forEach((b) => {
+          const active = b === btn;
           b.classList.toggle('is-active', active);
           b.setAttribute('aria-pressed', String(active));
         });
@@ -1099,80 +910,57 @@
     [
       customAmountInput,
       recipientNameInput,
-      recipientContactInput,
+      recipientEmailInput,
       senderNameInput,
       deliveryDateInput,
-      messageInput
-    ].forEach(function (el) {
+      messageInput,
+    ].forEach((el) => {
       if (!el) return;
-      el.addEventListener('input', function () {
-        if (voucherAlertEl) voucherAlertEl.hidden = true;
+      el.addEventListener('input', () => {
+        if (voucherAlert) voucherAlert.hidden = true;
         updatePreviewAndSummary();
       });
     });
 
-    deliveryRadios.forEach(function (radio) {
-      radio.addEventListener('change', updatePreviewAndSummary);
-    });
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
       if (!validateVoucherForm()) {
-        if (voucherAlertEl) {
-          voucherAlertEl.className = 'alert alert-error';
-          voucherAlertEl.innerHTML =
-            '<div>Please fix the highlighted voucher fields before adding to cart.</div>';
-          voucherAlertEl.hidden = false;
+        if (voucherAlert) {
+          voucherAlert.className = 'alert alert-error';
+          voucherAlert.textContent = 'Please fix the highlighted voucher fields before continuing.';
+          voucherAlert.hidden = false;
         }
-        api.showToast(
-          'Please check the highlighted voucher details.',
-          'error',
-          'Validation Needed'
-        );
+        notifyToast('Please check the highlighted gift voucher fields.');
         return;
       }
 
-      var amount = getActiveAmount();
-      var format = getDeliveryFormat();
-      var total = amount + format.fee;
-      var recipient = recipientNameInput.value.trim();
-      var sender = senderNameInput.value.trim();
-      var contact = recipientContactInput.value.trim();
+      const amount = getActiveAmount();
+      const typeInfo = getCardTypeInfo();
+      const total = amount + typeInfo.fee;
+      const recipient = recipientNameInput.value.trim();
+      const email = recipientEmailInput.value.trim();
+      const sender = senderNameInput.value.trim();
+      const deliveryDate = deliveryDateInput.value;
 
-      api.addToCart({
-        id: 'gift-voucher-' + amount + '-' + format.key,
-        name: 'DineIn Gift Voucher (' + api.formatPKR(amount) + ')',
+      addItemToCart({
+        id: `gift-voucher-${typeInfo.key}-${amount}-${Date.now()}`,
+        name: `Dine in ${typeInfo.badge} (${formatUSD(amount)})`,
         price: total,
         quantity: 1,
-        category: 'Gift Voucher',
-        meta:
-          selectedTheme +
-          ' | For ' +
-          recipient +
-          ' (' +
-          contact +
-          ') | From ' +
-          sender +
-          ' | ' +
-          format.label
+        notes: `${selectedOccasion} • To: ${recipient} (${email}) • From: ${sender} • Date: ${deliveryDate}`,
       });
 
-      if (voucherAlertEl) {
-        voucherAlertEl.className = 'alert alert-success';
-        voucherAlertEl.innerHTML =
-          '<div><strong>Voucher ready!</strong> ' +
-          api.formatPKR(amount) +
-          ' gift voucher for <strong>' +
-          escapeHTML(recipient) +
-          '</strong> added to your DineIn cart.</div>';
-        voucherAlertEl.hidden = false;
+      if (voucherAlert) {
+        voucherAlert.className = 'alert alert-success';
+        voucherAlert.innerHTML = `<strong>Voucher Added!</strong> ${formatUSD(amount)} ${escapeHtml(typeInfo.badge)} for <strong>${escapeHtml(recipient)}</strong> is in your cart.`;
+        voucherAlert.hidden = false;
       }
     });
 
     updatePreviewAndSummary();
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', () => {
     initDealsPage();
     initBuildPlatterPage();
     initGiftVouchersPage();
