@@ -1,1 +1,665 @@
-<h1>Dine in - Home</h1>
+<!-- Section: SE-D -->
+<!-- Root Project Hub: DineIn (SE-D Group 03) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DineIn | Project Hub — SE-D Group 03</title>
+  <link rel="stylesheet" href="css/dinein-26i3169.css">
+  <style>
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.28rem 0.75rem;
+      border-radius: var(--radius-pill);
+      background-color: rgba(250, 247, 242, 0.12);
+      border: 1px solid rgba(250, 247, 242, 0.22);
+      color: var(--color-cream);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    .hero .btn-outline {
+      color: var(--color-cream);
+      border-color: rgba(250, 247, 242, 0.45);
+    }
+
+    .hero .btn-outline:hover:not(:disabled) {
+      background-color: var(--color-terracotta);
+      border-color: var(--color-terracotta);
+      color: #FFFFFF;
+    }
+
+    .hero .btn-secondary {
+      border-color: rgba(250, 247, 242, 0.25);
+    }
+
+    .section-alt {
+      background-color: var(--color-surface-alt);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .module-list {
+      margin: 0.5rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .module-list li {
+      padding: 0.55rem 0.7rem;
+      background-color: var(--color-cream);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+    }
+
+    .module-list strong {
+      color: var(--color-charcoal);
+    }
+
+    .module-file {
+      display: inline-block;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 0.82rem;
+      color: var(--color-terracotta-dark);
+      background-color: var(--color-terracotta-soft);
+      padding: 0.1rem 0.4rem;
+      border-radius: var(--radius-sm);
+      margin-right: 0.25rem;
+    }
+
+    .placeholder-url {
+      display: block;
+      margin-top: 0.45rem;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      word-break: break-all;
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.65rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cart-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Shared Header Navbar -->
+  <header class="navbar">
+    <div class="container navbar-container">
+      <a href="hub-26i3169.html" class="navbar-brand">Dine <span>in</span></a>
+
+      <button class="navbar-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav class="navbar-menu" aria-label="Main navigation">
+        <ul class="navbar-links">
+          <li><a href="hub-26i3169.html" class="nav-link active">Home</a></li>
+          <li><a href="#repo-pages" class="nav-link">Repo Pages</a></li>
+          <li><a href="#team-modules" class="nav-link">Team Directory</a></li>
+          <li><a href="#project-overview" class="nav-link">Overview</a></li>
+          <li><a href="pages/cart.html" class="nav-link">Cart</a></li>
+          <li><a href="pages/checkout.html" class="nav-link">Checkout</a></li>
+          <li><a href="pages/order-tracking.html" class="nav-link">Track Order</a></li>
+        </ul>
+
+        <div class="navbar-actions">
+          <a href="pages/cart.html" class="cart-link">
+            Cart <span class="cart-badge" data-cart-badge>0</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero / Project Hub Overview -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badges">
+          <span class="hero-badge">Section SE-D</span>
+          <span class="hero-badge">Group 03</span>
+          <span class="hero-badge">Theme #19: Restaurant with Online Ordering</span>
+        </div>
+        <h1>DineIn — Project Hub</h1>
+        <p>
+          Central landing hub for the <strong>DineIn</strong> multi-page restaurant and online
+          ordering web application. Navigate directly to the pages hosted in this repository or jump
+          to each group member's assigned modules and deployed links.
+        </p>
+        <div class="hero-actions">
+          <a href="pages/cart.html" class="btn btn-primary btn-lg">Open Shopping Cart</a>
+          <a href="pages/checkout.html" class="btn btn-outline btn-lg">Go to Checkout</a>
+          <a href="pages/order-tracking.html" class="btn btn-outline btn-lg">Track Order</a>
+          <a href="#team-modules" class="btn btn-secondary btn-lg">Team Links</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Links to Pages Already Hosted in This Repository -->
+    <section id="repo-pages" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Available Pages in This Repository</h2>
+          <p>
+            Interactive Ordering &amp; Checkout Flow pages implemented in <code>pages/</code> and
+            powered by the shared <code>css/dinein-26i3169.css</code> design system and <code>js/dinein-cart-26i3169.js</code> cart engine.
+          </p>
+        </div>
+
+        <div class="alert cart-status-bar" role="status" aria-live="polite">
+          <div>
+            <strong>Live Session Cart:</strong>
+            <span id="hub-cart-summary">0 items ($0.00 subtotal) currently saved in localStorage.</span>
+          </div>
+          <a href="pages/cart.html" class="btn btn-primary btn-sm">Review Cart</a>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <div class="card-body">
+              <div class="card-header-row">
+                <h3 class="card-title">Shopping Cart</h3>
+                <span class="badge badge-success">Live in Repo</span>
+              </div>
+              <p class="card-subtitle"><code>pages/cart.html</code> &bull; Owner: 26I-3169</p>
+              <p class="card-text">
+                Manage selected dishes with live quantity controls, sample item loader, subtotal/tax/delivery
+                breakdown, and promo code calculation (<code>DINE10</code>).
+              </p>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">Ordering Flow</span>
+              <a href="pages/cart.html" class="btn btn-primary btn-sm">Open Cart</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <div class="card-header-row">
+                <h3 class="card-title">Online Checkout</h3>
+                <span class="badge badge-success">Live in Repo</span>
+              </div>
+              <p class="card-subtitle"><code>pages/checkout.html</code> &bull; Owner: 26I-3169</p>
+              <p class="card-text">
+                Complete delivery address and contact validation, select Cash on Delivery or Card payment
+                details, and submit orders persisted to <code>localStorage</code>.
+              </p>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">Ordering Flow</span>
+              <a href="pages/checkout.html" class="btn btn-primary btn-sm">Open Checkout</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <div class="card-header-row">
+                <h3 class="card-title">Live Order Tracking</h3>
+                <span class="badge badge-success">Live in Repo</span>
+              </div>
+              <p class="card-subtitle"><code>pages/order-tracking.html</code> &bull; Owner: 26I-3169</p>
+              <p class="card-text">
+                Look up orders by Order ID, follow the 4-step preparation-to-delivery status tracker, and
+                inspect recent or demo orders.
+              </p>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">Ordering Flow</span>
+              <a href="pages/order-tracking.html" class="btn btn-primary btn-sm">Track Order</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Group Members' Assigned & Deployed Pages Directory -->
+    <section id="team-modules" class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2>Team Modules &amp; Deployed Page Links</h2>
+          <p>
+            All 15 DineIn application modules organized by Group 03 team member. Replace each placeholder
+            URL with the member's live deployed site URL once published.
+          </p>
+        </div>
+
+        <div class="grid grid-3">
+          <!-- Member 1: Muhammad Danyal Khan (26I-3166) -->
+          <!-- PASTE LIVE URL: Replace the placeholder href values below with Muhammad Danyal Khan (26I-3166)'s deployed base/page URLs -->
+          <article class="card">
+            <div class="card-body">
+              <div class="card-header-row">
+                <div>
+                  <h3 class="card-title">Muhammad Danyal Khan</h3>
+                  <p class="card-subtitle">Roll No: 26I-3166 &bull; Core Experience &amp; Discovery</p>
+                </div>
+                <span class="badge badge-warning">URL Pending</span>
+              </div>
+              <ul class="module-list">
+                <li>
+                  <span class="module-file">index.html</span>
+                  <strong>Home Page:</strong> Hero section, featured dishes, quick order search.
+                  <!-- PASTE LIVE URL (26I-3166 - Home): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3166-home-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3166-home-url
+                  </a>
+                </li>
+                <li>
+                  <span class="module-file">full-menu.html</span>
+                  <strong>Full Menu:</strong> Category filter, price sorting, search.
+                  <!-- PASTE LIVE URL (26I-3166 - Full Menu): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3166-full-menu-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3166-full-menu-url
+                  </a>
+                </li>
+                <li>
+                  <span class="module-file">dish-details.html</span>
+                  <strong>Dish Details:</strong> Customization options, spice/portion calculator, add to cart.
+                  <!-- PASTE LIVE URL (26I-3166 - Dish Details): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3166-dish-details-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3166-dish-details-url
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">3 Assigned Pages</span>
+              <!-- PASTE LIVE URL (26I-3166 - Module Hub): Replace href with Danyal's deployed site root URL -->
+              <a href="https://example.com/paste-26i-3166-live-url" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                Open Deployed Site
+              </a>
+            </div>
+          </article>
+
+          <!-- Member 2: Muhammad Ali Saeed (26I-3169) -->
+          <!-- LIVE PAGES IN REPO: Linked directly to pages/cart.html, pages/checkout.html, and pages/order-tracking.html -->
+          <article class="card">
+            <div class="card-body">
+              <div class="card-header-row">
+                <div>
+                  <h3 class="card-title">Muhammad Ali Saeed</h3>
+                  <p class="card-subtitle">Roll No: 26I-3169 &bull; Ordering &amp; Checkout Flow</p>
+                </div>
+                <span class="badge badge-success">Hosted Here</span>
+              </div>
+              <ul class="module-list">
+                <li>
+                  <span class="module-file">pages/cart.html</span>
+                  <strong>Shopping Cart:</strong> Quantity update, promo code calculator, saved cart items.
+                  <a class="placeholder-url" href="pages/cart.html">pages/cart.html</a>
+                </li>
+                <li>
+                  <span class="module-file">pages/checkout.html</span>
+                  <strong>Online Checkout:</strong> Delivery address form validation, payment selection, order confirmation.
+                  <a class="placeholder-url" href="pages/checkout.html">pages/checkout.html</a>
+                </li>
+                <li>
+                  <span class="module-file">pages/order-tracking.html</span>
+                  <strong>Live Order Tracking:</strong> Order ID lookup, step-by-step status tracker, saved recent orders.
+                  <a class="placeholder-url" href="pages/order-tracking.html">pages/order-tracking.html</a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">3 Live Pages</span>
+              <!-- OPTIONAL EXTERNAL URL (26I-3169): Currently points to live GitHub Pages deployment -->
+              <a href="https://muhammad-ali-saeed-softwarehub.github.io/SE-D_Group03_DineIn/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                Live GitHub Pages
+              </a>
+            </div>
+          </article>
+
+          <!-- Member 3: Badiuzzaman Mian (26I-3171) -->
+          <!-- PASTE LIVE URL: Replace the placeholder href values below with Badiuzzaman Mian (26I-3171)'s deployed base/page URLs -->
+          <article class="card">
+            <div class="card-body">
+              <div class="card-header-row">
+                <div>
+                  <h3 class="card-title">Badiuzzaman Mian</h3>
+                  <p class="card-subtitle">Roll No: 26I-3171 &bull; Deals, Platters &amp; Combos</p>
+                </div>
+                <span class="badge badge-warning">URL Pending</span>
+              </div>
+              <ul class="module-list">
+                <li>
+                  <span class="module-file">deals.html</span>
+                  <strong>Deals &amp; Combos:</strong> Limited-time offers, countdown timer, bundle modal.
+                  <!-- PASTE LIVE URL (26I-3171 - Deals): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3171-deals-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3171-deals-url
+                  </a>
+                </li>
+                <li>
+                  <span class="module-file">build-platter.html</span>
+                  <strong>Build Your Own Platter:</strong> Interactive item selector, live calorie &amp; price calculator.
+                  <!-- PASTE LIVE URL (26I-3171 - Build Platter): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3171-build-platter-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3171-build-platter-url
+                  </a>
+                </li>
+                <li>
+                  <span class="module-file">gift-vouchers.html</span>
+                  <strong>Gift Vouchers:</strong> Custom voucher amount calculator, recipient form validation, saved vouchers.
+                  <!-- PASTE LIVE URL (26I-3171 - Gift Vouchers): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3171-gift-vouchers-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3171-gift-vouchers-url
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">3 Assigned Pages</span>
+              <!-- PASTE LIVE URL (26I-3171 - Module Hub): Replace href with Badiuzzaman's deployed site root URL -->
+              <a href="https://example.com/paste-26i-3171-live-url" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                Open Deployed Site
+              </a>
+            </div>
+          </article>
+
+          <!-- Member 4: Zarnab Mudassar (26I-3200) -->
+          <!-- PASTE LIVE URL: Replace the placeholder href values below with Zarnab Mudassar (26I-3200)'s deployed base/page URLs -->
+          <article class="card">
+            <div class="card-body">
+              <div class="card-header-row">
+                <div>
+                  <h3 class="card-title">Zarnab Mudassar</h3>
+                  <p class="card-subtitle">Roll No: 26I-3200 &bull; Dining, Events &amp; Reservations</p>
+                </div>
+                <span class="badge badge-warning">URL Pending</span>
+              </div>
+              <ul class="module-list">
+                <li>
+                  <span class="module-file">reservations.html</span>
+                  <strong>Table Reservation:</strong> Date/time/guests form validation, table availability check, saved booking.
+                  <!-- PASTE LIVE URL (26I-3200 - Reservations): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3200-reservations-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3200-reservations-url
+                  </a>
+                </li>
+                <li>
+                  <span class="module-file">catering.html</span>
+                  <strong>Catering &amp; Events:</strong> Guest count cost estimator, event inquiry form, package tabs.
+                  <!-- PASTE LIVE URL (26I-3200 - Catering): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3200-catering-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3200-catering-url
+                  </a>
+                </li>
+                <li>
+                  <span class="module-file">branches.html</span>
+                  <strong>Our Branches &amp; Timings:</strong> City/area filter, branch gallery modal, opening status.
+                  <!-- PASTE LIVE URL (26I-3200 - Branches): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3200-branches-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3200-branches-url
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">3 Assigned Pages</span>
+              <!-- PASTE LIVE URL (26I-3200 - Module Hub): Replace href with Zarnab's deployed site root URL -->
+              <a href="https://example.com/paste-26i-3200-live-url" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                Open Deployed Site
+              </a>
+            </div>
+          </article>
+
+          <!-- Member 5: Aiman Akbar (26I-3209) -->
+          <!-- PASTE LIVE URL: Replace the placeholder href values below with Aiman Akbar (26I-3209)'s deployed base/page URLs -->
+          <article class="card">
+            <div class="card-body">
+              <div class="card-header-row">
+                <div>
+                  <h3 class="card-title">Aiman Akbar</h3>
+                  <p class="card-subtitle">Roll No: 26I-3209 &bull; Trust, Community &amp; Support</p>
+                </div>
+                <span class="badge badge-warning">URL Pending</span>
+              </div>
+              <ul class="module-list">
+                <li>
+                  <span class="module-file">reviews.html</span>
+                  <strong>Customer Reviews:</strong> Rating filter, submit review form with validation, average rating calculator.
+                  <!-- PASTE LIVE URL (26I-3209 - Reviews): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3209-reviews-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3209-reviews-url
+                  </a>
+                </li>
+                <li>
+                  <span class="module-file">about-chefs.html</span>
+                  <strong>About Us &amp; Chefs:</strong> Chef profiles rendered from JS, interactive timeline/gallery, specialty modal.
+                  <!-- PASTE LIVE URL (26I-3209 - About & Chefs): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3209-about-chefs-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3209-about-chefs-url
+                  </a>
+                </li>
+                <li>
+                  <span class="module-file">contact-faq.html</span>
+                  <strong>Contact Us &amp; FAQs:</strong> Interactive FAQ accordion, support ticket form validation, saved inquiries.
+                  <!-- PASTE LIVE URL (26I-3209 - Contact & FAQs): Replace href with live URL -->
+                  <a class="placeholder-url" href="https://example.com/paste-26i-3209-contact-faq-url" target="_blank" rel="noopener noreferrer">
+                    https://example.com/paste-26i-3209-contact-faq-url
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">3 Assigned Pages</span>
+              <!-- PASTE LIVE URL (26I-3209 - Module Hub): Replace href with Aiman's deployed site root URL -->
+              <a href="https://example.com/paste-26i-3209-live-url" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                Open Deployed Site
+              </a>
+            </div>
+          </article>
+
+          <!-- Project Documentation & Usability Feedback Card (from README.md) -->
+          <article class="card">
+            <div class="card-body">
+              <div class="card-header-row">
+                <div>
+                  <h3 class="card-title">Project Links &amp; Docs</h3>
+                  <p class="card-subtitle">Repository &amp; Usability Resources (README.md)</p>
+                </div>
+                <span class="badge badge-primary">Group 03</span>
+              </div>
+              <ul class="module-list">
+                <li>
+                  <strong>Live Website:</strong> Published GitHub Pages deployment for Group 03.
+                  <a class="placeholder-url" href="https://muhammad-ali-saeed-softwarehub.github.io/SE-D_Group03_DineIn/" target="_blank" rel="noopener noreferrer">
+                    muhammad-ali-saeed-softwarehub.github.io/SE-D_Group03_DineIn/
+                  </a>
+                </li>
+                <li>
+                  <strong>Usability Feedback Form:</strong> Submit participant evaluation responses.
+                  <a class="placeholder-url" href="https://docs.google.com/forms/d/e/1FAIpQLSe24w8w8YXxBack52xmOUAOzrTbk5FKXKqHJ6JFFHZ66pQhYA/viewform?usp=sharing&ouid=117568575186808131902" target="_blank" rel="noopener noreferrer">
+                    Open Google Feedback Form
+                  </a>
+                </li>
+                <li>
+                  <strong>Project README:</strong> Full feature matrix, team roster, and module ownership.
+                  <a class="placeholder-url" href="README.md">README.md</a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">SE-D &bull; Theme #19</span>
+              <a href="README.md" class="btn btn-secondary btn-sm">View README</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Overview & Contribution Summary Table (from README.md) -->
+    <section id="project-overview" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Contribution &amp; Module Summary</h2>
+          <p>
+            Overview of DineIn's 15 pages across all five Group 03 members (Section SE-D), built with
+            semantic HTML5, shared CSS variables, and vanilla ES6 JavaScript.
+          </p>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Team Member</th>
+                <th>Roll No</th>
+                <th>Focus Area</th>
+                <th>Assigned Pages</th>
+                <th>Deployment Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Muhammad Danyal Khan</strong></td>
+                <td>26I-3166</td>
+                <td>Core Experience &amp; Discovery</td>
+                <td><code>index.html</code>, <code>full-menu.html</code>, <code>dish-details.html</code></td>
+                <td><span class="badge badge-warning">Link Pending</span></td>
+              </tr>
+              <tr>
+                <td><strong>Muhammad Ali Saeed</strong></td>
+                <td>26I-3169</td>
+                <td>Ordering &amp; Checkout Flow</td>
+                <td>
+                  <a href="pages/cart.html"><code>cart.html</code></a>,
+                  <a href="pages/checkout.html"><code>checkout.html</code></a>,
+                  <a href="pages/order-tracking.html"><code>order-tracking.html</code></a>
+                </td>
+                <td><span class="badge badge-success">Live in Repo</span></td>
+              </tr>
+              <tr>
+                <td><strong>Badiuzzaman Mian</strong></td>
+                <td>26I-3171</td>
+                <td>Deals, Platters &amp; Combos</td>
+                <td><code>deals.html</code>, <code>build-platter.html</code>, <code>gift-vouchers.html</code></td>
+                <td><span class="badge badge-warning">Link Pending</span></td>
+              </tr>
+              <tr>
+                <td><strong>Zarnab Mudassar</strong></td>
+                <td>26I-3200</td>
+                <td>Dining, Events &amp; Reservations</td>
+                <td><code>reservations.html</code>, <code>catering.html</code>, <code>branches.html</code></td>
+                <td><span class="badge badge-warning">Link Pending</span></td>
+              </tr>
+              <tr>
+                <td><strong>Aiman Akbar</strong></td>
+                <td>26I-3209</td>
+                <td>Trust, Community &amp; Support</td>
+                <td><code>reviews.html</code>, <code>about-chefs.html</code>, <code>contact-faq.html</code></td>
+                <td><span class="badge badge-warning">Link Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-title">Dine in</h3>
+          <p>
+            Multi-page restaurant and online ordering web application built for Theme #19 by Group 03,
+            Section SE-D.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Repo Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="hub-26i3169.html">Project Hub (Home)</a></li>
+            <li><a href="pages/cart.html">Shopping Cart</a></li>
+            <li><a href="pages/checkout.html">Online Checkout</a></li>
+            <li><a href="pages/order-tracking.html">Live Order Tracking</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Project Resources</h4>
+          <ul class="footer-links">
+            <li><a href="#team-modules">Team Directory</a></li>
+            <li><a href="#project-overview">Contribution Summary</a></li>
+            <li><a href="README.md">Project README</a></li>
+            <li>
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSe24w8w8YXxBack52xmOUAOzrTbk5FKXKqHJ6JFFHZ66pQhYA/viewform?usp=sharing&ouid=117568575186808131902" target="_blank" rel="noopener noreferrer">
+                Usability Feedback Form
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Project Info</h4>
+          <p>Section: SE-D &bull; Group 03</p>
+          <p>Category: Food (Theme #19)</p>
+          <p>Stack: HTML5, CSS3 &amp; Vanilla ES6 JS</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 DineIn — Group 03. All rights reserved.</span>
+        <span>Section SE-D | Theme #19: Restaurant with Online Ordering</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/dinein-cart-26i3169.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      function syncHubCartSummary() {
+        const summaryEl = document.getElementById('hub-cart-summary');
+        if (!summaryEl || !window.DineInCart) return;
+
+        const totals = window.DineInCart.calculateTotals();
+        const itemLabel = totals.itemCount === 1 ? 'item' : 'items';
+        const formattedSubtotal = window.DineInCart.formatCurrency(totals.subtotal);
+        summaryEl.textContent = `${totals.itemCount} ${itemLabel} (${formattedSubtotal} subtotal) currently saved in localStorage.`;
+      }
+
+      document.addEventListener('DOMContentLoaded', syncHubCartSummary);
+      window.addEventListener('storage', syncHubCartSummary);
+    })();
+  </script>
+</body>
+</html>
