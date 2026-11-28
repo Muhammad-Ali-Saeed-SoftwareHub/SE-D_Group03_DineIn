@@ -1,328 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <base href="./">
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DineIn | Crafted Over Fire, Served With Warmth</title>
-  <meta name="description" content="DineIn is a modern wood-fired restaurant offering seasonal dishes, handcrafted pasta, prime cuts, and warm hospitality." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <title>DineIn – Home</title>
+  <link rel="stylesheet" href="css/style_i263166.css" />
 </head>
 <body>
-  <!-- Consistent Site Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand-logo" aria-label="DineIn Home">
-        <span class="brand-mark">D</span>
-        <span>DineIn</span>
-      </a>
-
-      <nav id="primary-nav" class="nav-links" aria-label="Primary Navigation">
-        <a href="index.html" class="nav-link active">Home</a>
-        <a href="pages/full-menu.html" class="nav-link">Full Menu</a>
-        <a href="pages/dish-details.html" class="nav-link">Dish Details</a>
-        <a href="#about" class="nav-link">Our Story</a>
-        <a href="#offers" class="nav-link">Special Offers</a>
-        <a href="#testimonials" class="nav-link">Reviews</a>
-      </nav>
-
-      <div class="header-actions">
-        <button type="button" class="cart-btn" data-open-cart aria-label="Open order cart">
-          <span>Order</span>
-          <span class="cart-count" data-cart-count>0</span>
-        </button>
-        <button type="button" id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-    </div>
+  <header>
+    <h1>DineIn</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="pages/full-menu.html">Full Menu</a>
+      <a href="pages/dish-details.html?dish=s1">Dish Details</a>
+    </nav>
   </header>
 
   <main>
     <!-- Hero Section -->
     <section class="hero">
-      <img src="images/hero-dining.jpg" alt="DineIn restaurant table spread with artisan wood-fired dishes and warm candlelight" class="hero-bg" />
-      <div class="hero-overlay" aria-hidden="true"></div>
-      <div class="container hero-content">
-        <span class="hero-badge">Seasonal Wood-Fired Dining</span>
-        <h1 class="hero-title">Crafted Over Fire.<br />Served With Warmth.</h1>
-        <p class="hero-subtitle">
-          Experience locally sourced ingredients, 72-hour sourdough, and oak-fired classics prepared fresh to order in the heart of the city.
-        </p>
-        <div class="hero-actions">
-          <a href="pages/full-menu.html" class="btn btn-primary">Explore Full Menu</a>
-          <a href="pages/dish-details.html?id=wood-fired-ribeye" class="btn btn-light-outline">Chef's Signature Dish</a>
-        </div>
-        <div class="hero-stats">
-          <div>
-            <span class="hero-stat-value">4.9 / 5</span>
-            <span class="hero-stat-label">Guest Rating</span>
-          </div>
-          <div>
-            <span class="hero-stat-value">100%</span>
-            <span class="hero-stat-label">Fresh Daily Prep</span>
-          </div>
-          <div>
-            <span class="hero-stat-value">12 PM – 11 PM</span>
-            <span class="hero-stat-label">Open Daily</span>
-          </div>
-        </div>
-      </div>
+      <h2>Welcome to DineIn</h2>
+      <p>Experience the finest culinary delights in a warm, inviting atmosphere.</p>
+      <button onclick="location.href='pages/full-menu.html'">Order Now</button>
     </section>
 
-    <!-- Featured Dishes Section -->
-    <section class="section" id="featured">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">Chef's Selection</span>
-          <h2 class="section-title">Featured Signature Dishes</h2>
-          <p class="section-subtitle">
-            Discover our most requested plates—balanced flavors, crisp textures, and seasonal produce straight from our wood-fired kitchen.
-          </p>
-        </div>
-
-        <div id="featured-dishes-grid" class="grid-4">
-          <!-- Populated dynamically from js/menu-data.js -->
-        </div>
-
-        <div style="text-align: center; margin-top: 40px;">
-          <a href="pages/full-menu.html" class="btn btn-secondary">View Complete Menu &rarr;</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Restaurant Introduction / Our Story -->
-    <section class="section section-alt" id="about">
-      <div class="container story-grid">
-        <div class="story-image-wrap">
-          <img src="images/about-chef.jpg" alt="DineIn head chef plating a signature dish in the kitchen" loading="lazy" />
-        </div>
-        <div>
-          <span class="section-eyebrow">Our Culinary Story</span>
-          <h2 class="section-title">Rooted in Tradition, Built for Today</h2>
-          <p style="color: var(--color-muted); margin-bottom: 16px;">
-            Founded with a simple promise—honest ingredients cooked with patience—DineIn brings together rustic Mediterranean warmth and contemporary culinary craft.
-          </p>
-          <p style="color: var(--color-muted);">
-            Every morning begins with hand-rolling our pasta dough, simmering heirloom tomato sauces, and stoking our oak hearth so every table enjoys vibrant, memorable dining.
-          </p>
-
-          <div class="story-highlights">
-            <div class="highlight-box">
-              <h3>Farm-to-Table Produce</h3>
-              <p>Partnering with regional farms for peak-season herbs and vegetables.</p>
-            </div>
-            <div class="highlight-box">
-              <h3>Oak-Fired Hearth</h3>
-              <p>850°F brick oven and open-flame grill for unmistakable depth of flavor.</p>
-            </div>
-          </div>
-
-          <a href="pages/full-menu.html" class="btn btn-primary">Browse Seasonal Plates</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Special Offers -->
-    <section class="section section-dark" id="offers">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">Curated Experiences</span>
-          <h2 class="section-title">Special Offers &amp; Dining Privileges</h2>
-          <p class="section-subtitle">
-            Make your weekday dinner or weekend gathering even more rewarding with our seasonal table offers.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <article class="offer-card">
-            <div>
-              <span class="offer-badge">Tue – Thu · 20% Off</span>
-              <h3 class="offer-title">Midweek Chef's Tasting</h3>
-              <p class="offer-desc">
-                Enjoy 20% off any starter and main course pairing when dining between 5:00 PM and 7:30 PM on weekdays.
-              </p>
-            </div>
-            <div class="offer-footer">
-              <span>Code: MIDWEEK20</span>
-              <a href="pages/full-menu.html" style="color: var(--color-surface); font-weight: 600;">Explore Menu &rarr;</a>
-            </div>
-          </article>
-
-          <article class="offer-card">
-            <div>
-              <span class="offer-badge">Weekend Special</span>
-              <h3 class="offer-title">Artisan Pasta &amp; Fizz Duo</h3>
-              <p class="offer-desc">
-                Order any two handcrafted pasta or wood-fired pizza dishes and receive two complimentary Blood Orange Rosemary Fizzes.
-              </p>
-            </div>
-            <div class="offer-footer">
-              <span>Fri – Sun · All Day</span>
-              <a href="pages/dish-details.html?id=truffle-tagliatelle" style="color: var(--color-surface); font-weight: 600;">View Pasta &rarr;</a>
-            </div>
-          </article>
-
-          <article class="offer-card">
-            <div>
-              <span class="offer-badge">Sweet Finale</span>
-              <h3 class="offer-title">Complimentary Tiramisu</h3>
-              <p class="offer-desc">
-                Celebrating a birthday or group dinner of 4+ guests? Enjoy a house-made Espresso Tiramisu on the house.
-              </p>
-            </div>
-            <div class="offer-footer">
-              <span>Tables of 4+</span>
-              <a href="pages/dish-details.html?id=espresso-tiramisu" style="color: var(--color-surface); font-weight: 600;">See Dessert &rarr;</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="section" id="testimonials">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">Guest Voices</span>
-          <h2 class="section-title">What Our Guests Say</h2>
-          <p class="section-subtitle">
-            Warm service and unforgettable plates—hear from diners who made DineIn part of their favorite evenings.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <article class="testimonial-card">
-            <div>
-              <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-              <p class="testimonial-quote">
-                "The Wood-Fired Ribeye was cooked to perfection, and the truffle tagliatelle had incredible depth. Warm ambiance from start to finish."
-              </p>
-            </div>
-            <div class="testimonial-author">
-              <div class="author-avatar" aria-hidden="true">AR</div>
-              <div>
-                <div class="author-name">Ayesha Rahman</div>
-                <div class="author-role">Verified Dinner Guest</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="testimonial-card">
-            <div>
-              <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-              <p class="testimonial-quote">
-                "Crispy calamari and the blood orange fizz are a must-try. Ordering online and browsing the menu was effortless and fast."
-              </p>
-            </div>
-            <div class="testimonial-author">
-              <div class="author-avatar" aria-hidden="true">HK</div>
-              <div>
-                <div class="author-name">Hamza Khalid</div>
-                <div class="author-role">Weekend Regular</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="testimonial-card">
-            <div>
-              <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-              <p class="testimonial-quote">
-                "Our family celebration was unforgettable. The burrata pizza crust had that authentic char, and the espresso tiramisu stole the show."
-              </p>
-            </div>
-            <div class="testimonial-author">
-              <div class="author-avatar" aria-hidden="true">SN</div>
-              <div>
-                <div class="author-name">Sana Naveed</div>
-                <div class="author-role">Private Dining Guest</div>
-              </div>
-            </div>
-          </article>
-        </div>
+    <!-- Featured Dishes -->
+    <section class="featured">
+      <h2>Featured Dishes</h2>
+      <div class="featured">
+        <!-- Cards will be rendered by JS -->
       </div>
     </section>
   </main>
 
-  <!-- Consistent Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="brand-logo">
-            <span class="brand-mark">D</span>
-            <span>DineIn</span>
-          </a>
-          <p>
-            Modern wood-fired dining crafted with seasonal ingredients, artisan technique, and warm hospitality.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="footer-heading">Explore</h3>
-          <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="pages/full-menu.html">Full Menu</a></li>
-            <li><a href="pages/dish-details.html">Signature Dish</a></li>
-            <li><a href="#about">Our Story</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 class="footer-heading">Hours</h3>
-          <ul class="footer-links">
-            <li>Mon – Thu: 12:00 PM – 10:30 PM</li>
-            <li>Fri – Sun: 12:00 PM – 11:30 PM</li>
-            <li>Weekend Brunch: 10:00 AM – 2:00 PM</li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 class="footer-heading">Visit Us</h3>
-          <ul class="footer-links">
-            <li>42 Courtyard Avenue, Gulberg</li>
-            <li>hello@dinein-restaurant.com</li>
-            <li>+92 (51) 555-0194</li>
-          </ul>
-        </div>
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Cart Summary</h3>
+        <button onclick="closeModal('cart-modal')">&times;</button>
       </div>
-
-      <div class="footer-bottom">
-        <span>&copy; 2026 DineIn Restaurant — SE-D Group 03. All rights reserved.</span>
-        <span>Crafted with HTML5, CSS3 &amp; Vanilla JavaScript</span>
-      </div>
+      <div id="cart-items"></div>
+      <p><strong>Total: </strong><span id="cart-total">$0.00</span></p>
+      <button onclick="confirmOrder()">Proceed to Checkout</button>
     </div>
+  </div>
+
+  <!-- Order Confirmation Modal -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Order Confirmed</h3>
+        <button onclick="closeModal('order-modal')">&times;</button>
+      </div>
+      <p>Thank you! Your order has been placed.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 DineIn Restaurant. All rights reserved.</p>
   </footer>
 
-  <!-- Cart Slide-Over Drawer -->
-  <div id="cart-backdrop" class="cart-backdrop" aria-hidden="true"></div>
-  <aside id="cart-drawer" class="cart-drawer" aria-label="Order Cart" aria-hidden="true">
-    <div class="cart-drawer-header">
-      <h2>Your Order</h2>
-      <button type="button" id="cart-close-btn" class="cart-close-btn" aria-label="Close order cart">&times;</button>
-    </div>
-    <div id="cart-drawer-body" class="cart-drawer-body"></div>
-    <div class="cart-drawer-footer">
-      <div class="cart-total-row">
-        <span>Subtotal</span>
-        <span id="cart-subtotal">$0.00</span>
-      </div>
-      <div class="cart-footer-actions">
-        <button type="button" id="cart-clear-btn" class="btn btn-secondary btn-sm">Clear</button>
-        <button type="button" id="cart-checkout-btn" class="btn btn-primary btn-sm">Place Order</button>
-      </div>
-    </div>
-  </aside>
-
-  <div id="dinein-toast" class="toast" role="status" aria-live="polite"></div>
-
-  <script src="js/menu-data.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
