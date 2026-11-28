@@ -1,0 +1,507 @@
+<!-- Name: Muhammad Ali Saeed -->
+<!-- Roll no: i263169 -->
+<!-- Section: SE-D -->
+<!-- Order-tracking page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Tracking | Dine in</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .tracking-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.75rem;
+    }
+
+    .status-stepper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.75rem 0 1.25rem;
+      position: relative;
+    }
+
+    .status-step {
+      text-align: center;
+      position: relative;
+      padding: 0.75rem 0.5rem;
+      border-radius: var(--radius-md);
+      background-color: var(--color-cream);
+      border: 1px solid var(--color-border);
+      transition: border-color var(--transition), background-color var(--transition);
+    }
+
+    .step-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      margin: 0 auto 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      background-color: var(--color-surface-alt);
+      color: var(--color-text-muted);
+      border: 2px solid var(--color-border);
+    }
+
+    .step-label {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .step-desc {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0;
+    }
+
+    .status-step.is-completed {
+      border-color: var(--color-success);
+      background-color: var(--color-success-soft);
+    }
+
+    .status-step.is-completed .step-circle {
+      background-color: var(--color-success);
+      border-color: var(--color-success);
+      color: #FFFFFF;
+    }
+
+    .status-step.is-completed .step-label {
+      color: var(--color-charcoal);
+    }
+
+    .status-step.is-current {
+      border-color: var(--color-terracotta);
+      background-color: var(--color-terracotta-soft);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .status-step.is-current .step-circle {
+      background-color: var(--color-terracotta);
+      border-color: var(--color-terracotta);
+      color: #FFFFFF;
+    }
+
+    .status-step.is-current .step-label {
+      color: var(--color-terracotta-dark);
+    }
+
+    .tracking-details-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 820px) {
+      .status-stepper {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tracking-details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .status-stepper {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Shared Header Navbar -->
+  <header class="navbar">
+    <div class="container navbar-container">
+      <a href="../index.html" class="navbar-brand">Dine <span>in</span></a>
+
+      <button class="navbar-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav class="navbar-menu" aria-label="Main navigation">
+        <ul class="navbar-links">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="full-menu.html" class="nav-link">Full Menu</a></li>
+          <li><a href="deals.html" class="nav-link">Deals</a></li>
+          <li><a href="cart.html" class="nav-link">Cart</a></li>
+          <li><a href="checkout.html" class="nav-link">Checkout</a></li>
+          <li><a href="order-tracking.html" class="nav-link active">Track Order</a></li>
+          <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+          <li class="nav-dropdown">
+            <button class="nav-link nav-dropdown-toggle" type="button">More &#9662;</button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="dish-details.html" class="nav-link">Dish Details</a></li>
+              <li><a href="build-platter.html" class="nav-link">Build Platter</a></li>
+              <li><a href="gift-vouchers.html" class="nav-link">Gift Vouchers</a></li>
+              <li><a href="catering.html" class="nav-link">Catering</a></li>
+              <li><a href="branches.html" class="nav-link">Branches</a></li>
+              <li><a href="reviews.html" class="nav-link">Reviews</a></li>
+              <li><a href="about-chefs.html" class="nav-link">About &amp; Chefs</a></li>
+              <li><a href="contact-faq.html" class="nav-link">Contact &amp; FAQs</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="navbar-actions">
+          <a href="cart.html" class="cart-link">
+            Cart <span class="cart-badge" data-cart-badge>0</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="flex-between mb-2">
+          <div>
+            <h1>Order Tracking</h1>
+            <p class="mb-0">Follow your meal from our kitchen to your doorstep in real time.</p>
+          </div>
+          <a href="cart.html" class="btn btn-outline btn-sm">Start New Order</a>
+        </div>
+
+        <div id="demo-order-banner" class="alert" hidden>
+          Showing a <strong>demo order</strong> because no recent order was found in localStorage. Place an order from <a href="checkout.html"><strong>Checkout</strong></a> to track your own order!
+        </div>
+
+        <!-- Order Status Card -->
+        <section class="tracking-card" aria-label="Live order status">
+          <div class="flex-between">
+            <div>
+              <span class="badge badge-primary">Order ID: <strong id="track-order-id">DI-00000</strong></span>
+              <h2 class="mt-1 mb-0" id="current-status-heading">Order Confirmed</h2>
+            </div>
+            <div class="text-muted">
+              <strong>Estimated Delivery:</strong>
+              <div id="track-eta">30–40 mins</div>
+            </div>
+          </div>
+
+          <!-- 4-Step Visual Progress Tracker -->
+          <div class="status-stepper" id="status-stepper" role="list">
+            <div class="status-step" data-step="0" role="listitem">
+              <div class="step-circle">1</div>
+              <div class="step-label">Order Confirmed</div>
+              <p class="step-desc">We received your order.</p>
+            </div>
+            <div class="status-step" data-step="1" role="listitem">
+              <div class="step-circle">2</div>
+              <div class="step-label">Preparing Food</div>
+              <p class="step-desc">Chefs are cooking fresh.</p>
+            </div>
+            <div class="status-step" data-step="2" role="listitem">
+              <div class="step-circle">3</div>
+              <div class="step-label">Out for Delivery</div>
+              <p class="step-desc">Rider is on the way.</p>
+            </div>
+            <div class="status-step" data-step="3" role="listitem">
+              <div class="step-circle">4</div>
+              <div class="step-label">Delivered</div>
+              <p class="step-desc">Enjoy your meal!</p>
+            </div>
+          </div>
+
+          <div class="flex-between mt-2">
+            <p class="mb-0 text-muted" id="status-message">
+              Your order has been confirmed by our kitchen team.
+            </p>
+            <div class="flex">
+              <button type="button" id="advance-status-btn" class="btn btn-primary btn-sm">
+                Advance Order Status
+              </button>
+              <button type="button" id="reset-status-btn" class="btn btn-ghost btn-sm">
+                Reset Status
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Ordered Items & Delivery Details -->
+        <div class="tracking-details-grid">
+          <section class="summary-box" aria-label="Ordered items summary">
+            <h3 class="mb-2">Ordered Items</h3>
+            <div id="track-items-list"></div>
+
+            <div class="summary-row mt-2">
+              <span>Subtotal</span>
+              <span id="track-subtotal">$0.00</span>
+            </div>
+            <div class="summary-row" id="track-discount-row" hidden>
+              <span>Promo Discount</span>
+              <span id="track-discount" class="text-accent">-$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax</span>
+              <span id="track-tax">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Delivery Fee</span>
+              <span id="track-delivery">$0.00</span>
+            </div>
+            <div class="summary-row summary-total">
+              <span>Total Paid / Due</span>
+              <span id="track-total">$0.00</span>
+            </div>
+          </section>
+
+          <section class="summary-box" aria-label="Delivery information">
+            <h3 class="mb-2">Delivery &amp; Payment</h3>
+            <p class="mb-1"><strong>Customer:</strong> <span id="track-customer-name">-</span></p>
+            <p class="mb-1"><strong>Phone:</strong> <span id="track-customer-phone">-</span></p>
+            <p class="mb-1"><strong>Address:</strong> <span id="track-customer-address">-</span></p>
+            <p class="mb-1"><strong>Instructions:</strong> <span id="track-customer-instructions">None</span></p>
+            <p class="mb-0"><strong>Payment Method:</strong> <span id="track-payment-method">-</span></p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-title">Dine in</h3>
+          <p>Freshly prepared dishes crafted with warm hospitality and delivered straight to your table.</p>
+        </div>
+        <div>
+          <h4 class="footer-title">Ordering &amp; Deals</h4>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="full-menu.html">Full Menu</a></li>
+            <li><a href="dish-details.html">Dish Details</a></li>
+            <li><a href="deals.html">Deals &amp; Combos</a></li>
+            <li><a href="build-platter.html">Build a Platter</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="order-tracking.html">Order Tracking</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Dining &amp; Support</h4>
+          <ul class="footer-links">
+            <li><a href="gift-vouchers.html">Gift Vouchers</a></li>
+            <li><a href="reservations.html">Table Reservations</a></li>
+            <li><a href="catering.html">Catering &amp; Events</a></li>
+            <li><a href="branches.html">Our Branches</a></li>
+            <li><a href="reviews.html">Customer Reviews</a></li>
+            <li><a href="about-chefs.html">About Us &amp; Chefs</a></li>
+            <li><a href="contact-faq.html">Contact &amp; FAQs</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Hours &amp; Location</h4>
+          <p>Mon – Sun: 11:00 AM – 11:00 PM</p>
+          <p>125 Warm Hearth Avenue</p>
+          <p>Phone: (555) 234-5678</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Dine in Restaurant. All rights reserved.</span>
+        <span>Group 03 | Section SE-D</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const ORDER_STORAGE_KEY = 'dinein_active_order_v1';
+
+      const STEPS = [
+        {
+          title: 'Order Confirmed',
+          message: 'Your order has been confirmed and sent to the Dine in kitchen.',
+        },
+        {
+          title: 'Preparing Food',
+          message: 'Our chefs are freshly preparing and packing your dishes.',
+        },
+        {
+          title: 'Out for Delivery',
+          message: 'Your delivery rider has picked up your order and is heading your way.',
+        },
+        {
+          title: 'Delivered',
+          message: 'Order delivered! Thank you for ordering with Dine in.',
+        },
+      ];
+
+      const DEMO_ORDER = {
+        orderId: 'DI-73920',
+        estimatedDelivery: '30–40 mins',
+        statusIndex: 1,
+        isDemo: true,
+        customer: {
+          fullName: 'Samira Khan (Demo)',
+          phone: '(555) 890-1234',
+          address: '42 Maple Terrace, Apt 4B',
+          instructions: 'Ring doorbell upon arrival.',
+        },
+        paymentMethod: 'Cash on Delivery',
+        items: [
+          { name: 'Wood-Fired Margherita Pizza', price: 15.00, quantity: 1 },
+          { name: 'Herb Roasted Chicken Bowl', price: 13.50, quantity: 1 },
+        ],
+        totals: {
+          subtotal: 28.50,
+          discount: 0,
+          tax: 2.28,
+          delivery: 4.99,
+          total: 35.77,
+        },
+      };
+
+      const demoBanner = document.getElementById('demo-order-banner');
+      const orderIdEl = document.getElementById('track-order-id');
+      const etaEl = document.getElementById('track-eta');
+      const statusHeading = document.getElementById('current-status-heading');
+      const statusMessage = document.getElementById('status-message');
+      const stepElements = document.querySelectorAll('#status-stepper .status-step');
+      const advanceBtn = document.getElementById('advance-status-btn');
+      const resetBtn = document.getElementById('reset-status-btn');
+
+      const itemsListEl = document.getElementById('track-items-list');
+      const subtotalEl = document.getElementById('track-subtotal');
+      const discountRowEl = document.getElementById('track-discount-row');
+      const discountEl = document.getElementById('track-discount');
+      const taxEl = document.getElementById('track-tax');
+      const deliveryEl = document.getElementById('track-delivery');
+      const totalEl = document.getElementById('track-total');
+
+      const customerNameEl = document.getElementById('track-customer-name');
+      const customerPhoneEl = document.getElementById('track-customer-phone');
+      const customerAddressEl = document.getElementById('track-customer-address');
+      const customerInstructionsEl = document.getElementById('track-customer-instructions');
+      const paymentMethodEl = document.getElementById('track-payment-method');
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = String(text);
+        return div.innerHTML;
+      }
+
+      function loadOrder() {
+        try {
+          const raw = localStorage.getItem(ORDER_STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && parsed.orderId) {
+              return parsed;
+            }
+          }
+        } catch (error) {
+          console.warn('Could not read saved order:', error);
+        }
+        return { ...DEMO_ORDER };
+      }
+
+      let currentOrder = loadOrder();
+
+      function saveOrderStatusIfReal() {
+        if (!currentOrder.isDemo) {
+          localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(currentOrder));
+        }
+      }
+
+      function renderOrder() {
+        demoBanner.hidden = !currentOrder.isDemo;
+        orderIdEl.textContent = currentOrder.orderId;
+        etaEl.textContent = currentOrder.estimatedDelivery || '30–40 mins';
+
+        const activeStep = Math.max(0, Math.min(STEPS.length - 1, currentOrder.statusIndex || 0));
+        statusHeading.textContent = STEPS[activeStep].title;
+        statusMessage.textContent = STEPS[activeStep].message;
+
+        stepElements.forEach((stepEl, index) => {
+          stepEl.classList.remove('is-completed', 'is-current');
+          if (index < activeStep) {
+            stepEl.classList.add('is-completed');
+          } else if (index === activeStep) {
+            stepEl.classList.add('is-current');
+          }
+        });
+
+        advanceBtn.disabled = activeStep >= STEPS.length - 1;
+        advanceBtn.textContent =
+          activeStep >= STEPS.length - 1 ? 'Order Delivered' : 'Advance Order Status';
+
+        // Render ordered items
+        itemsListEl.innerHTML = (currentOrder.items || [])
+          .map((item) => {
+            const lineTotal = window.DineInCart.formatCurrency(item.price * item.quantity);
+            return `
+              <div class="summary-row">
+                <span>${item.quantity} &times; ${escapeHtml(item.name)}</span>
+                <strong>${lineTotal}</strong>
+              </div>
+            `;
+          })
+          .join('');
+
+        const totals = currentOrder.totals || {
+          subtotal: 0,
+          discount: 0,
+          tax: 0,
+          delivery: 0,
+          total: 0,
+        };
+
+        subtotalEl.textContent = window.DineInCart.formatCurrency(totals.subtotal);
+        if (totals.discount && totals.discount > 0) {
+          discountRowEl.hidden = false;
+          discountEl.textContent = `-${window.DineInCart.formatCurrency(totals.discount)}`;
+        } else {
+          discountRowEl.hidden = true;
+        }
+        taxEl.textContent = window.DineInCart.formatCurrency(totals.tax);
+        deliveryEl.textContent = window.DineInCart.formatCurrency(totals.delivery);
+        totalEl.textContent = window.DineInCart.formatCurrency(totals.total);
+
+        // Render delivery & payment details
+        const customer = currentOrder.customer || {};
+        customerNameEl.textContent = customer.fullName || '-';
+        customerPhoneEl.textContent = customer.phone || '-';
+        customerAddressEl.textContent = customer.address || '-';
+        customerInstructionsEl.textContent = customer.instructions || 'None';
+        paymentMethodEl.textContent = currentOrder.paymentMethod || '-';
+      }
+
+      advanceBtn.addEventListener('click', () => {
+        if ((currentOrder.statusIndex || 0) < STEPS.length - 1) {
+          currentOrder.statusIndex = (currentOrder.statusIndex || 0) + 1;
+          saveOrderStatusIfReal();
+          renderOrder();
+          window.DineInCart.showToast(`Status updated: ${STEPS[currentOrder.statusIndex].title}`);
+        }
+      });
+
+      resetBtn.addEventListener('click', () => {
+        currentOrder.statusIndex = 0;
+        saveOrderStatusIfReal();
+        renderOrder();
+        window.DineInCart.showToast('Order status reset to Order Confirmed.');
+      });
+
+      renderOrder();
+    })();
+  </script>
+</body>
+</html>
