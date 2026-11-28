@@ -1,0 +1,561 @@
+<!-- Name: Muhammad Ali Saeed -->
+<!-- Roll no: i263169 -->
+<!-- Section: SE-D -->
+<!-- Checkout Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Dine in</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .payment-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.4rem;
+    }
+
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-cream);
+      cursor: pointer;
+      transition: border-color var(--transition), background-color var(--transition);
+    }
+
+    .payment-option:has(input:checked) {
+      border-color: var(--color-terracotta);
+      background-color: var(--color-terracotta-soft);
+    }
+
+    .payment-option input {
+      accent-color: var(--color-terracotta);
+      width: 17px;
+      height: 17px;
+    }
+
+    .card-fields {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: var(--color-cream);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+    }
+
+    .summary-items-list {
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .summary-item-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.92rem;
+      padding: 0.35rem 0;
+    }
+
+    @media (max-width: 860px) {
+      .checkout-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Shared Header Navbar -->
+  <header class="navbar">
+    <div class="container navbar-container">
+      <a href="../index.html" class="navbar-brand">Dine <span>in</span></a>
+
+      <button class="navbar-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav class="navbar-menu" aria-label="Main navigation">
+        <ul class="navbar-links">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="menu.html" class="nav-link">Menu</a></li>
+          <li><a href="deals.html" class="nav-link">Deals</a></li>
+          <li><a href="cart.html" class="nav-link">Cart</a></li>
+          <li><a href="checkout.html" class="nav-link active">Checkout</a></li>
+          <li><a href="order-tracking.html" class="nav-link">Track Order</a></li>
+          <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+          <li class="nav-dropdown">
+            <button class="nav-link nav-dropdown-toggle" type="button">More &#9662;</button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="specials.html" class="nav-link">Chef Specials</a></li>
+              <li><a href="order-history.html" class="nav-link">Order History</a></li>
+              <li><a href="catering.html" class="nav-link">Catering</a></li>
+              <li><a href="gift-cards.html" class="nav-link">Gift Cards</a></li>
+              <li><a href="reviews.html" class="nav-link">Reviews</a></li>
+              <li><a href="profile.html" class="nav-link">Profile</a></li>
+              <li><a href="login.html" class="nav-link">Login</a></li>
+              <li><a href="about.html" class="nav-link">About Us</a></li>
+              <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="navbar-actions">
+          <a href="cart.html" class="cart-link">
+            Cart <span class="cart-badge" data-cart-badge>0</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="mb-3">
+          <h1>Checkout</h1>
+          <p class="mb-0">Enter your delivery details and choose a payment method to place your order.</p>
+        </div>
+
+        <div id="empty-cart-alert" class="alert" hidden>
+          Your cart is currently empty. <a href="cart.html"><strong>Go back to Cart</strong></a> to add or load sample items before placing an order.
+        </div>
+
+        <div class="checkout-layout">
+          <!-- Delivery & Payment Form -->
+          <form id="checkout-form" class="form-card" novalidate>
+            <h2 class="mb-2">Delivery Details</h2>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="full-name" class="form-label">
+                  Full Name <span class="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="full-name"
+                  name="fullName"
+                  class="form-control"
+                  placeholder="e.g., Alex Rivera"
+                  required
+                >
+                <span class="form-error" id="error-full-name"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="phone" class="form-label">
+                  Phone Number <span class="required">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  class="form-control"
+                  placeholder="e.g., 555-234-5678"
+                  required
+                >
+                <span class="form-error" id="error-phone"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address" class="form-label">
+                Delivery Address <span class="required">*</span>
+              </label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                class="form-control"
+                placeholder="Street address, apartment/suite, city"
+                required
+              >
+              <span class="form-error" id="error-address"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="instructions" class="form-label">Delivery Instructions (Optional)</label>
+              <textarea
+                id="instructions"
+                name="instructions"
+                class="form-textarea"
+                placeholder="Gate code, drop-off preference, extra napkins..."
+              ></textarea>
+            </div>
+
+            <hr class="mb-2" style="border: 0; border-top: 1px solid var(--color-border);">
+
+            <h2 class="mb-1">Payment Method</h2>
+            <div class="form-group">
+              <div class="payment-options">
+                <label class="payment-option">
+                  <input type="radio" name="paymentMethod" value="Cash on Delivery" checked>
+                  <span><strong>Cash on Delivery</strong></span>
+                </label>
+                <label class="payment-option">
+                  <input type="radio" name="paymentMethod" value="Card">
+                  <span><strong>Credit / Debit Card</strong></span>
+                </label>
+              </div>
+
+              <!-- Shown only when Card is selected -->
+              <div id="card-fields" class="card-fields" hidden>
+                <div class="form-group">
+                  <label for="card-number" class="form-label">
+                    Card Number <span class="required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="card-number"
+                    class="form-control"
+                    placeholder="1234 5678 9012 3456"
+                    maxlength="19"
+                  >
+                  <span class="form-error" id="error-card-number"></span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group mb-1">
+                    <label for="card-expiry" class="form-label">
+                      Expiry (MM/YY) <span class="required">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="card-expiry"
+                      class="form-control"
+                      placeholder="08/28"
+                      maxlength="5"
+                    >
+                    <span class="form-error" id="error-card-expiry"></span>
+                  </div>
+                  <div class="form-group mb-1">
+                    <label for="card-cvv" class="form-label">
+                      CVV <span class="required">*</span>
+                    </label>
+                    <input
+                      type="password"
+                      id="card-cvv"
+                      class="form-control"
+                      placeholder="123"
+                      maxlength="4"
+                    >
+                    <span class="form-error" id="error-card-cvv"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" id="place-order-btn" class="btn btn-primary btn-block btn-lg mt-2">
+              Place Order
+            </button>
+          </form>
+
+          <!-- Order Summary Sidebar -->
+          <aside class="summary-box" aria-label="Order summary">
+            <div class="flex-between mb-2">
+              <h2 class="mb-0">Order Summary</h2>
+              <a href="cart.html" class="btn btn-ghost btn-sm">Edit Cart</a>
+            </div>
+
+            <div id="checkout-items" class="summary-items-list"></div>
+
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="checkout-subtotal">$0.00</span>
+            </div>
+            <div class="summary-row" id="checkout-discount-row" hidden>
+              <span>Promo (<span id="checkout-promo-code">DINE10</span>)</span>
+              <span id="checkout-discount" class="text-accent">-$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (8%)</span>
+              <span id="checkout-tax">$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Delivery Fee</span>
+              <span id="checkout-delivery">$0.00</span>
+            </div>
+            <div class="summary-row summary-total">
+              <span>Total</span>
+              <span id="checkout-total">$0.00</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-title">Dine in</h3>
+          <p>Freshly prepared dishes crafted with warm hospitality and delivered straight to your table.</p>
+        </div>
+        <div>
+          <h4 class="footer-title">Ordering</h4>
+          <ul class="footer-links">
+            <li><a href="menu.html">Full Menu</a></li>
+            <li><a href="deals.html">Combo Deals</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="order-tracking.html">Order Tracking</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Restaurant</h4>
+          <ul class="footer-links">
+            <li><a href="reservations.html">Table Reservations</a></li>
+            <li><a href="catering.html">Catering Services</a></li>
+            <li><a href="about.html">Our Story</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Hours &amp; Location</h4>
+          <p>Mon – Sun: 11:00 AM – 11:00 PM</p>
+          <p>125 Warm Hearth Avenue</p>
+          <p>Phone: (555) 234-5678</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Dine in Restaurant. All rights reserved.</span>
+        <span>Group 03 | Section SE-D</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const PROMO_STORAGE_KEY = 'dinein_promo_v1';
+      const ORDER_STORAGE_KEY = 'dinein_active_order_v1';
+
+      const form = document.getElementById('checkout-form');
+      const emptyAlert = document.getElementById('empty-cart-alert');
+      const itemsList = document.getElementById('checkout-items');
+      const placeOrderBtn = document.getElementById('place-order-btn');
+
+      const subtotalEl = document.getElementById('checkout-subtotal');
+      const discountRow = document.getElementById('checkout-discount-row');
+      const promoCodeEl = document.getElementById('checkout-promo-code');
+      const discountEl = document.getElementById('checkout-discount');
+      const taxEl = document.getElementById('checkout-tax');
+      const deliveryEl = document.getElementById('checkout-delivery');
+      const totalEl = document.getElementById('checkout-total');
+
+      const cardFields = document.getElementById('card-fields');
+      const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+
+      function roundMoney(value) {
+        return Math.round((value + Number.EPSILON) * 100) / 100;
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = String(text);
+        return div.innerHTML;
+      }
+
+      function computeCheckoutTotals() {
+        const base = window.DineInCart.calculateTotals();
+        const promoCode = (localStorage.getItem(PROMO_STORAGE_KEY) || '').trim().toUpperCase();
+        const discount = promoCode === 'DINE10' && base.subtotal > 0 ? roundMoney(base.subtotal * 0.10) : 0;
+        const discountedSubtotal = Math.max(0, roundMoney(base.subtotal - discount));
+        const tax = roundMoney(discountedSubtotal * window.DineInCart.DEFAULT_TAX_RATE);
+        const total = roundMoney(discountedSubtotal + tax + base.delivery);
+
+        return {
+          promoCode: discount > 0 ? promoCode : '',
+          subtotal: base.subtotal,
+          discount,
+          tax,
+          delivery: base.delivery,
+          total,
+        };
+      }
+
+      function renderSummary() {
+        const cart = window.DineInCart.getCart();
+        const totals = computeCheckoutTotals();
+
+        emptyAlert.hidden = cart.length > 0;
+        placeOrderBtn.disabled = cart.length === 0;
+
+        if (cart.length === 0) {
+          itemsList.innerHTML = '<p class="text-muted mb-0">No items in cart.</p>';
+        } else {
+          itemsList.innerHTML = cart
+            .map((item) => {
+              const lineTotal = window.DineInCart.formatCurrency(item.price * item.quantity);
+              return `
+                <div class="summary-item-row">
+                  <span>${item.quantity} &times; ${escapeHtml(item.name)}</span>
+                  <strong>${lineTotal}</strong>
+                </div>
+              `;
+            })
+            .join('');
+        }
+
+        subtotalEl.textContent = window.DineInCart.formatCurrency(totals.subtotal);
+        if (totals.discount > 0) {
+          discountRow.hidden = false;
+          promoCodeEl.textContent = totals.promoCode;
+          discountEl.textContent = `-${window.DineInCart.formatCurrency(totals.discount)}`;
+        } else {
+          discountRow.hidden = true;
+        }
+        taxEl.textContent = window.DineInCart.formatCurrency(totals.tax);
+        deliveryEl.textContent = window.DineInCart.formatCurrency(totals.delivery);
+        totalEl.textContent = window.DineInCart.formatCurrency(totals.total);
+      }
+
+      function setFieldError(inputId, errorId, message) {
+        const input = document.getElementById(inputId);
+        const error = document.getElementById(errorId);
+        if (message) {
+          input.classList.add('is-invalid');
+          error.textContent = message;
+          return false;
+        }
+        input.classList.remove('is-invalid');
+        error.textContent = '';
+        return true;
+      }
+
+      function getSelectedPaymentMethod() {
+        const checked = document.querySelector('input[name="paymentMethod"]:checked');
+        return checked ? checked.value : 'Cash on Delivery';
+      }
+
+      function validateForm() {
+        const fullName = document.getElementById('full-name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const address = document.getElementById('address').value.trim();
+        const paymentMethod = getSelectedPaymentMethod();
+
+        let isValid = true;
+
+        if (fullName.length < 2) {
+          isValid = setFieldError('full-name', 'error-full-name', 'Please enter your full name.') && isValid;
+        } else {
+          setFieldError('full-name', 'error-full-name', '');
+        }
+
+        const digitsOnly = phone.replace(/\D/g, '');
+        if (digitsOnly.length < 7) {
+          isValid = setFieldError('phone', 'error-phone', 'Please enter a valid phone number (at least 7 digits).') && isValid;
+        } else {
+          setFieldError('phone', 'error-phone', '');
+        }
+
+        if (address.length < 6) {
+          isValid = setFieldError('address', 'error-address', 'Please enter a complete delivery address.') && isValid;
+        } else {
+          setFieldError('address', 'error-address', '');
+        }
+
+        if (paymentMethod === 'Card') {
+          const cardNum = document.getElementById('card-number').value.replace(/\s+/g, '');
+          const cardExpiry = document.getElementById('card-expiry').value.trim();
+          const cardCvv = document.getElementById('card-cvv').value.trim();
+
+          if (!/^\d{12,19}$/.test(cardNum)) {
+            isValid = setFieldError('card-number', 'error-card-number', 'Enter a valid 12–19 digit card number.') && isValid;
+          } else {
+            setFieldError('card-number', 'error-card-number', '');
+          }
+
+          if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(cardExpiry)) {
+            isValid = setFieldError('card-expiry', 'error-card-expiry', 'Use MM/YY format.') && isValid;
+          } else {
+            setFieldError('card-expiry', 'error-card-expiry', '');
+          }
+
+          if (!/^\d{3,4}$/.test(cardCvv)) {
+            isValid = setFieldError('card-cvv', 'error-card-cvv', 'Enter 3 or 4 digits.') && isValid;
+          } else {
+            setFieldError('card-cvv', 'error-card-cvv', '');
+          }
+        } else {
+          setFieldError('card-number', 'error-card-number', '');
+          setFieldError('card-expiry', 'error-card-expiry', '');
+          setFieldError('card-cvv', 'error-card-cvv', '');
+        }
+
+        return isValid;
+      }
+
+      function generateOrderId() {
+        const randomDigits = Math.floor(10000 + Math.random() * 90000);
+        return `DI-${randomDigits}`;
+      }
+
+      paymentRadios.forEach((radio) => {
+        radio.addEventListener('change', () => {
+          cardFields.hidden = getSelectedPaymentMethod() !== 'Card';
+        });
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const cart = window.DineInCart.getCart();
+        if (cart.length === 0) {
+          window.DineInCart.showToast('Your cart is empty. Add items before placing an order.');
+          return;
+        }
+
+        if (!validateForm()) {
+          window.DineInCart.showToast('Please fix the highlighted form fields.');
+          return;
+        }
+
+        const totals = computeCheckoutTotals();
+        const now = new Date();
+        const eta = new Date(now.getTime() + 35 * 60000);
+        const formattedEta = eta.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const orderRecord = {
+          orderId: generateOrderId(),
+          createdAt: now.toISOString(),
+          estimatedDelivery: `30–40 mins (by ${formattedEta})`,
+          statusIndex: 0,
+          customer: {
+            fullName: document.getElementById('full-name').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            address: document.getElementById('address').value.trim(),
+            instructions: document.getElementById('instructions').value.trim(),
+          },
+          paymentMethod: getSelectedPaymentMethod(),
+          items: cart,
+          totals,
+        };
+
+        localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(orderRecord));
+        localStorage.removeItem(PROMO_STORAGE_KEY);
+        window.DineInCart.clearCart();
+
+        window.location.href = 'order-tracking.html';
+      });
+
+      renderSummary();
+    })();
+  </script>
+</body>
+</html>
