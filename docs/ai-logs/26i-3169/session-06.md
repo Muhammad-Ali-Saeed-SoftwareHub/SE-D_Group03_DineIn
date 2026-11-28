@@ -36,3 +36,9 @@
   - Confirmed all stylesheet `<link>` and `<script src>` paths across all 4 HTML files resolve to existing files (`hub-26i3169.html`: 2 assets OK, 52 links checked; `pages/cart.html`, `pages/checkout.html`, and `pages/order-tracking.html`: 2 assets OK, 34 links checked each).
   - Confirmed zero remaining `index.html` `href` attributes in any HTML file and zero `index.html` references in `js/dinein-cart-26i3169.js` or `css/dinein-26i3169.css`. (Note: the 11 sibling `pages/*.html` links for other team members' modules in `pages/cart.html`, `pages/checkout.html`, and `pages/order-tracking.html` remain aligned with `README.md`.)
   - Script reported `ALL CHECKS PASSED`.
+
+### Part 3 (2026-11-28T01:31:17-08:00)
+> Create a simple root index.html that immediately redirects users to hub-26i3169.html using a meta refresh tag and a JavaScript fallback (window.location.replace('hub-26i3169.html')), plus a visible fallback link to hub-26i3169.html. Check that hub-26i3169.html, pages/cart.html, pages/checkout.html, and pages/order-tracking.html all have valid relative links to css/dinein-26i3169.css and js/dinein-cart-26i3169.js. Also append a summary of this step to docs/ai-logs/26i-3169/session-06.md.
+
+- **Created `index.html`:** Added a lightweight root redirect page containing `<meta http-equiv="refresh" content="0; url=hub-26i3169.html">`, `window.location.replace('hub-26i3169.html')`, and a visible fallback link `<a href="hub-26i3169.html">`.
+- **Verified CSS/JS Relative Links:** Confirmed `hub-26i3169.html` points to `css/dinein-26i3169.css` and `js/dinein-cart-26i3169.js`, while `pages/cart.html`, `pages/checkout.html`, and `pages/order-tracking.html` each point to `../css/dinein-26i3169.css` and `../js/dinein-cart-26i3169.js`, with all target files existing on disk.
