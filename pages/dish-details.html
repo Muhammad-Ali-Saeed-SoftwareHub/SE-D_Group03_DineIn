@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DineIn – Dish Details</title>
+  <link rel="stylesheet" href="../css/style_i263166.css" />
+</head>
+<body>
+  <header>
+    <h1>DineIn</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="full-menu.html">Full Menu</a>
+      <a href="dish-details.html">Dish Details</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="dish-detail" id="dish-detail">
+      <!-- Content populated by JS -->
+    </section>
+  </main>
+
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Cart Summary</h3>
+        <button onclick="closeModal('cart-modal')">&times;</button>
+      </div>
+      <div id="cart-items"></div>
+      <p><strong>Total: </strong><span id="cart-total">$0.00</span></p>
+      <button onclick="confirmOrder()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- Order Confirmation Modal -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Order Confirmed</h3>
+        <button onclick="closeModal('order-modal')">&times;</button>
+      </div>
+      <p>Thank you! Your order has been placed.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 DineIn Restaurant. All rights reserved.</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

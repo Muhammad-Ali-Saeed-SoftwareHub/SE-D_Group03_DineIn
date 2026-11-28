@@ -1,3 +1,37 @@
+i263166
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="./">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DineIn – Home</title>
+  <link rel="stylesheet" href="css/style_i263166.css" />
+</head>
+<body>
+  <header>
+    <h1>DineIn</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="pages/full-menu.html">Full Menu</a>
+      <a href="pages/dish-details.html?dish=s1">Dish Details</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h2>Welcome to DineIn</h2>
+      <p>Experience the finest culinary delights in a warm, inviting atmosphere.</p>
+      <button onclick="location.href='pages/full-menu.html'">Order Now</button>
+    </section>
+
+    <!-- Featured Dishes -->
+    <section class="featured">
+      <h2>Featured Dishes</h2>
+      <div class="featured">
+        <!-- Cards will be rendered by JS -->
 <!-- Section: SE-D -->
 <!-- Root Project Hub: DineIn (SE-D Group 03) -->
 <!DOCTYPE html>
@@ -591,6 +625,36 @@
     </section>
   </main>
 
+i263166
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Cart Summary</h3>
+        <button onclick="closeModal('cart-modal')">&times;</button>
+      </div>
+      <div id="cart-items"></div>
+      <p><strong>Total: </strong><span id="cart-total">$0.00</span></p>
+      <button onclick="confirmOrder()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- Order Confirmation Modal -->
+  <div id="order-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Order Confirmed</h3>
+        <button onclick="closeModal('order-modal')">&times;</button>
+      </div>
+      <p>Thank you! Your order has been placed.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 DineIn Restaurant. All rights reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
   <!-- Shared Footer -->
   <footer class="footer">
     <div class="container">
