@@ -1,0 +1,403 @@
+/* ==========================================================================
+   Dine in — Module M4: Restaurant Branches Stylesheet
+   Designed to seamlessly complement css/style3169.css design tokens
+   ========================================================================== */
+
+/* Hero Banner Enhancements */
+.branches-hero {
+  position: relative;
+  background:
+    radial-gradient(circle at 80% 25%, rgba(217, 83, 47, 0.35), transparent 50%),
+    linear-gradient(135deg, var(--color-charcoal) 0%, #2A201C 60%, #3D2319 100%);
+  padding: 4.25rem 0 3.75rem;
+  border-bottom: 3px solid var(--color-terracotta);
+  text-align: center;
+}
+
+.hero-actions-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  flex-wrap: wrap;
+}
+
+/* Service Highlights / Overview Row */
+.branch-amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.amenity-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition);
+}
+
+.amenity-card:hover {
+  transform: translateY(-2px);
+}
+
+.amenity-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--color-terracotta-soft);
+  color: var(--color-terracotta);
+  display: inline-grid;
+  place-items: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.amenity-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.amenity-card p {
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+}
+
+/* Search & Filter Controls Panel */
+.branch-controls-panel {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2.25rem;
+}
+
+.search-filter-layout {
+  display: grid;
+  grid-template-columns: 1.8fr 1.2fr auto;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input-icon {
+  position: absolute;
+  left: 0.85rem;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  font-size: 1rem;
+}
+
+.search-input-wrap .form-control {
+  padding-left: 2.45rem;
+  padding-right: 2.4rem;
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+}
+
+.search-clear-btn:hover {
+  color: var(--color-charcoal);
+}
+
+.search-clear-btn[hidden] {
+  display: none;
+}
+
+/* Quick Filter Pills */
+.filter-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.filter-pills-label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-right: 0.35rem;
+}
+
+.filter-pill {
+  border: 1.5px solid var(--color-border);
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
+  border-radius: var(--radius-pill);
+  padding: 0.35rem 0.85rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.filter-pill:hover {
+  border-color: var(--color-terracotta);
+}
+
+.filter-pill.is-active {
+  background-color: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(217, 83, 47, 0.25);
+}
+
+/* Results Status Bar */
+.results-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+}
+
+.results-count-badge {
+  font-weight: 700;
+  color: var(--color-charcoal);
+}
+
+/* Branch Cards Grid */
+.branches-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.75rem;
+  align-items: stretch;
+}
+
+.branch-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.branch-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: #D3C4B3;
+}
+
+.branch-card-header {
+  padding: 1.35rem 1.25rem 1rem;
+  background-color: var(--color-cream);
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.branch-tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
+.branch-city-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-terracotta);
+  background-color: var(--color-terracotta-soft);
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--radius-pill);
+}
+
+.branch-type-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.branch-name {
+  font-family: var(--font-heading);
+  font-size: 1.32rem;
+  color: var(--color-charcoal);
+  margin-bottom: 0.25rem;
+}
+
+.branch-area {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.branch-card-body {
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.branch-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.15rem;
+}
+
+.branch-details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.88rem;
+  border-top: 1px dashed var(--color-border);
+  padding-top: 0.85rem;
+}
+
+.branch-details-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  color: var(--color-charcoal);
+}
+
+.branch-details-icon {
+  color: var(--color-terracotta);
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.branch-details-text {
+  flex: 1;
+}
+
+.branch-details-text strong {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.branch-card-footer {
+  padding: 1rem 1.25rem;
+  background-color: var(--color-cream);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: 0.65rem;
+}
+
+.branch-card-footer .btn {
+  flex: 1;
+}
+
+/* No Results State */
+.no-results-box {
+  background-color: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+.no-results-icon {
+  font-size: 2.5rem;
+  color: var(--color-terracotta);
+  margin-bottom: 0.75rem;
+}
+
+.no-results-box h3 {
+  font-size: 1.35rem;
+  color: var(--color-charcoal);
+  margin-bottom: 0.45rem;
+}
+
+.no-results-box p {
+  color: var(--color-text-muted);
+  max-width: 440px;
+  margin: 0 auto 1.25rem;
+}
+
+/* Demonstration Notice Card */
+.demo-disclaimer-card {
+  border-left: 4px solid var(--color-gold, #C6943A);
+  background-color: #FFF9ED;
+  color: #794A08;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.demo-disclaimer-card strong {
+  color: #5C3806;
+}
+
+/* Responsive adjustments */
+@media (max-width: 980px) {
+  .branches-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .search-filter-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search-filter-layout .btn {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 650px) {
+  .branches-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .search-filter-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .branch-card-footer {
+    flex-direction: column;
+  }
+
+  .branch-amenities-grid {
+    grid-template-columns: 1fr;
+  }
+}
