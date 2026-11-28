@@ -299,7 +299,7 @@ function initNavbarToggle() {
   });
 
   // Highlight active navigation link based on current URL filename
-  const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+  const currentFile = window.location.pathname.split('/').pop() || 'hub-26i3169.html';
   document.querySelectorAll('.navbar-links .nav-link').forEach((link) => {
     const href = link.getAttribute('href') || '';
     const linkFile = href.split('/').pop();
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
 });
 
-// Expose clean global API for all pages in index.html and pages/
+// Expose clean global API for all pages in hub-26i3169.html and pages/
 window.DineInCart = {
   getCart,
   addToCart,
