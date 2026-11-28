@@ -1,0 +1,219 @@
+<!-- Name: Badiuzzaman Mian -->
+<!-- Roll no: i263171 -->
+<!-- Section: SE-D -->
+<!-- Deals & Offers Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deals &amp; Offers | Dine in</title>
+  <link rel="stylesheet" href="../css/style3169.css">
+  <link rel="stylesheet" href="../css/offers-builder.css">
+</head>
+<body>
+  <!-- Shared Header Navbar -->
+  <header class="navbar">
+    <div class="container navbar-container">
+      <a href="../index.html" class="navbar-brand">Dine <span>in</span></a>
+
+      <button class="navbar-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav class="navbar-menu" aria-label="Main navigation">
+        <ul class="navbar-links">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="menu.html" class="nav-link">Menu</a></li>
+          <li><a href="deals.html" class="nav-link active">Deals</a></li>
+          <li><a href="build-platter.html" class="nav-link">Build Platter</a></li>
+          <li><a href="cart.html" class="nav-link">Cart</a></li>
+          <li><a href="checkout.html" class="nav-link">Checkout</a></li>
+          <li><a href="order-tracking.html" class="nav-link">Track Order</a></li>
+          <li><a href="reservations.html" class="nav-link">Reservations</a></li>
+          <li class="nav-dropdown">
+            <button class="nav-link nav-dropdown-toggle" type="button">More &#9662;</button>
+            <ul class="nav-dropdown-menu">
+              <li><a href="specials.html" class="nav-link">Chef Specials</a></li>
+              <li><a href="order-history.html" class="nav-link">Order History</a></li>
+              <li><a href="catering.html" class="nav-link">Catering</a></li>
+              <li><a href="gift-vouchers.html" class="nav-link">Gift Vouchers</a></li>
+              <li><a href="reviews.html" class="nav-link">Reviews</a></li>
+              <li><a href="profile.html" class="nav-link">Profile</a></li>
+              <li><a href="login.html" class="nav-link">Login</a></li>
+              <li><a href="about.html" class="nav-link">About Us</a></li>
+              <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="navbar-actions">
+          <a href="cart.html" class="cart-link">
+            Cart <span class="cart-badge" data-cart-badge>0</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Deals Hero Banner with Live Ticking Countdown -->
+    <section class="hero deals-hero">
+      <div class="container">
+        <h1>Chef Combo Deals &amp; Limited-Time Offers</h1>
+        <p>
+          Save on wood-fired steaks, smoky brisket burgers, handcrafted pasta duos, and family
+          sharing feasts crafted daily in our kitchen.
+        </p>
+        <div class="deals-countdown-banner" role="status" aria-live="off">
+          <span>Flash Combo Offer &bull; Expires in</span>
+          <span id="deals-countdown" class="countdown-timer-value">02:15:30</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- Search, Category Filter & Promo Code Box -->
+        <div class="deals-controls-grid">
+          <div class="form-card search-panel">
+            <div>
+              <label for="deals-search" class="form-label">Search Deals &amp; Combos</label>
+              <div class="search-input-wrap">
+                <span class="search-input-icon" aria-hidden="true">&#128269;</span>
+                <input
+                  type="search"
+                  id="deals-search"
+                  class="form-control"
+                  placeholder="Search ribeye, brisket burger, truffle pasta, salmon..."
+                  autocomplete="off"
+                >
+                <button type="button" id="deals-search-clear" class="search-clear-btn" hidden>
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <span class="form-label">Filter by Category</span>
+              <div class="filter-pills" role="group" aria-label="Deal categories">
+                <button type="button" class="filter-pill is-active" data-category="All" aria-pressed="true">
+                  All
+                </button>
+                <button type="button" class="filter-pill" data-category="Family Combos" aria-pressed="false">
+                  Family Combos
+                </button>
+                <button type="button" class="filter-pill" data-category="Burgers &amp; Grill" aria-pressed="false">
+                  Burgers &amp; Grill
+                </button>
+                <button type="button" class="filter-pill" data-category="Pasta &amp; Mains" aria-pressed="false">
+                  Pasta &amp; Mains
+                </button>
+                <button type="button" class="filter-pill" data-category="Lunch Specials" aria-pressed="false">
+                  Lunch Specials
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <form id="promo-form" class="form-card promo-panel" novalidate>
+            <div>
+              <label for="promo-code-input" class="form-label">Apply Promo Code</label>
+              <span class="form-hint" style="margin-top:0;margin-bottom:0.55rem;">
+                Saved automatically to your cart &amp; checkout session.
+              </span>
+              <div class="promo-input-row">
+                <input
+                  type="text"
+                  id="promo-code-input"
+                  class="form-control"
+                  placeholder="Enter code (e.g., DINE10)"
+                  maxlength="20"
+                  autocomplete="off"
+                >
+                <button type="submit" class="btn btn-primary">Apply</button>
+              </div>
+            </div>
+
+            <div id="promo-alert" class="alert" role="status" hidden></div>
+
+            <div class="promo-chips">
+              <span>Quick codes:</span>
+              <button type="button" class="promo-chip" data-promo-fill="DINE10">DINE10</button>
+              <button type="button" class="promo-chip" data-promo-fill="FEAST5">FEAST5</button>
+              <button type="button" class="promo-chip" data-promo-fill="WELCOME10">WELCOME10</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Combo Deals Grid -->
+        <div class="deals-header-bar">
+          <div>
+            <h2 class="mb-0">Featured Western Combo Deals</h2>
+            <p class="mb-0">Add any bundle directly to your Dine in cart.</p>
+          </div>
+          <span id="deals-result-count" class="badge badge-charcoal">9 deals available</span>
+        </div>
+
+        <div id="deals-grid" class="deals-grid"></div>
+
+        <div id="deals-empty-state" class="form-card deals-empty-state" hidden>
+          <h3>No matching combo deals found</h3>
+          <p>
+            Try clearing your search term or switching back to all categories to view our full
+            lineup of featured offers.
+          </p>
+          <button type="button" id="deals-reset-btn" class="btn btn-primary">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-title">Dine in</h3>
+          <p>Freshly prepared dishes crafted with warm hospitality and delivered straight to your table.</p>
+        </div>
+        <div>
+          <h4 class="footer-title">Ordering</h4>
+          <ul class="footer-links">
+            <li><a href="menu.html">Full Menu</a></li>
+            <li><a href="deals.html">Combo Deals</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="order-tracking.html">Order Tracking</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Restaurant</h4>
+          <ul class="footer-links">
+            <li><a href="reservations.html">Table Reservations</a></li>
+            <li><a href="catering.html">Catering Services</a></li>
+            <li><a href="about.html">Our Story</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Hours &amp; Location</h4>
+          <p>Mon – Sun: 11:00 AM – 11:00 PM</p>
+          <p>125 Warm Hearth Avenue</p>
+          <p>Phone: (555) 234-5678</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Dine in Restaurant. All rights reserved.</span>
+        <span>Group 03 | Section SE-D</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app3169.js"></script>
+  <script src="../js/offers-builder.js"></script>
+</body>
+</html>
